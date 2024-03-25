@@ -1,5 +1,5 @@
 export const APP_ROUTES = {
-  URL: 'http://localhost:3002',
+  URL:  process.env.BACKEND_URL,
   WELCOME: `/`,
   CATALOG: '/catalog',
   // PRODUCT: '/product
