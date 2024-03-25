@@ -3,8 +3,8 @@ import { PrismaService } from 'src/prisma.service';
 export declare class ReferralService {
     private readonly prisma;
     constructor(prisma: PrismaService);
-    create(createReferralDto: CreateReferralDto): unknown;
-    findAll(user_id: number): unknown;
-    findOne(id: number): unknown;
-    deleteOne(id: number): unknown;
+    create(createReferralDto: CreateReferralDto): Promise<any>;
+    findAll(user_id: number): Promise<any>;
+    findOne(id: number): Promise<any>;
+    deleteOne(id: number): Promise<any>;
 }

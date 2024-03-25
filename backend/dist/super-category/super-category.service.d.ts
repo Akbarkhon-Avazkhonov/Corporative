@@ -4,9 +4,11 @@ import { PrismaService } from 'src/prisma.service';
 export declare class SuperCategoryService {
     private readonly prisma;
     constructor(prisma: PrismaService);
-    create(createSuperCategoryDto: CreateSuperCategoryDto): unknown;
-    findAll(): unknown;
+    create(createSuperCategoryDto: CreateSuperCategoryDto): Promise<any>;
+    findAll(): Promise<{
+        superCategories: any;
+    }>;
     findOne(id: number): any;
-    update(id: number, updateSuperCategoryDto: UpdateSuperCategoryDto): unknown;
-    remove(id: number): unknown;
+    update(id: number, updateSuperCategoryDto: UpdateSuperCategoryDto): Promise<any>;
+    remove(id: number): Promise<any>;
 }

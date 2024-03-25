@@ -4,9 +4,11 @@ import { UpdateSuperCategoryDto } from './dto/update-super-category.dto';
 export declare class SuperCategoryController {
     private readonly superCategoryService;
     constructor(superCategoryService: SuperCategoryService);
-    create(createSuperCategoryDto: CreateSuperCategoryDto): unknown;
-    findAll(): unknown;
+    create(createSuperCategoryDto: CreateSuperCategoryDto): Promise<any>;
+    findAll(): Promise<{
+        superCategories: any;
+    }>;
     findOne(id: string): any;
-    update(id: string, updateSuperCategoryDto: UpdateSuperCategoryDto): unknown;
-    remove(id: string): unknown;
+    update(id: string, updateSuperCategoryDto: UpdateSuperCategoryDto): Promise<any>;
+    remove(id: string): Promise<any>;
 }

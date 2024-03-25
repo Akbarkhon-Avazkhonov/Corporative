@@ -5,11 +5,11 @@ import { UpdateProductDto } from './dto/update-product.dto';
 export declare class ProductsController {
     private readonly productsService;
     constructor(productsService: ProductsService);
-    create(createProductDto: CreateProductDto): unknown;
+    create(createProductDto: CreateProductDto): Promise<any>;
     uploadFile(file: Express.Multer.File): Promise<string>;
-    findAll(): unknown;
-    findOne(id: string): unknown;
-    findByCategory(category_id: string): unknown;
-    update(id: string, updateProductDto: UpdateProductDto): unknown;
-    remove(id: string): unknown;
+    findAll(): Promise<any>;
+    findOne(id: string): Promise<any>;
+    findByCategory(category_id: string): Promise<any>;
+    update(id: string, updateProductDto: UpdateProductDto): Promise<any>;
+    remove(id: string): Promise<any>;
 }
