@@ -61,12 +61,15 @@ model Product {
 }
 
 model Orders {
-  id         Int      @id @default(autoincrement())
-  name       String
-  surname    String
-  phone      String
-  city       String
-  product_id Int
-  count      Int
-  created_at DateTime @default(now())
+  id          Int      @id @default(autoincrement())
+  name        String
+  surname     String
+  phone       String
+  city        String
+  product_id  Int
+  count       Int 
+  status      String  @default("NEW")
+  referral_id Int    @default(0) // user of user who created referral link
+  link_id     Int   @default(0)
+  created_at  DateTime @default(now())
 }

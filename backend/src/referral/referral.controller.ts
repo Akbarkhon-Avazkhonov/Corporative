@@ -4,7 +4,7 @@ import { CreateReferralDto } from './dto/create-referral.dto';
 import { ApiBearerAuth, ApiBody, ApiTags } from '@nestjs/swagger';
 import { AuthGuard } from 'src/auth/auth.guad';
 
-@ApiTags('Referral')
+@ApiTags('Referral Lincks')
 @UseGuards(AuthGuard)
 @ApiBearerAuth()
 @Controller('referral')
@@ -36,7 +36,7 @@ export class ReferralController {
   findOne(@Param('id') id: number) {
     return this.referralService.findOne(+id);
   }
-  
+
   @Delete(':id')
   deleteOne(@Param('id') id: number) {
     return this.referralService.deleteOne(+id);

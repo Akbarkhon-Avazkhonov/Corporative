@@ -6,16 +6,16 @@ export declare class AuthService {
     private jwtService;
     constructor(prisma: PrismaService, jwtService: JwtService);
     createUser(body: CreateUserDto): Promise<{
-        access_token: any;
-        user_id: any;
+        access_token: string;
+        user_id: number;
     }>;
     login(email: string, password: string): Promise<{
-        access_token: any;
-        user_id: any;
+        access_token: string;
+        user_id: number;
     }>;
     getProfile(email: string): Promise<{
-        user_id: any;
+        user_id: number;
         email: string;
-        balance: any;
+        balance: number;
     }>;
 }

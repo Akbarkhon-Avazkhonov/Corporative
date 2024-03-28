@@ -76,7 +76,7 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], ReferralController.prototype, "deleteOne", null);
 exports.ReferralController = ReferralController = __decorate([
-    (0, swagger_1.ApiTags)('Referral'),
+    (0, swagger_1.ApiTags)('Referral Lincks'),
     (0, common_1.UseGuards)(auth_guad_1.AuthGuard),
     (0, swagger_1.ApiBearerAuth)(),
     (0, common_1.Controller)('referral'),

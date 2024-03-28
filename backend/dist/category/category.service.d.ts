@@ -4,9 +4,29 @@ import { PrismaService } from 'src/prisma.service';
 export declare class CategoryService {
     private readonly prisma;
     constructor(prisma: PrismaService);
-    create(createCategoryDto: CreateCategoryDto): Promise<any>;
-    findAll(): Promise<any>;
-    findOne(id: number): Promise<any>;
-    update(id: number, updateCategoryDto: UpdateCategoryDto): Promise<any>;
-    remove(id: number): Promise<any>;
+    create(createCategoryDto: CreateCategoryDto): Promise<{
+        id: number;
+        title: string;
+        super_category_id: number;
+    }>;
+    findAll(): Promise<{
+        id: number;
+        title: string;
+        super_category_id: number;
+    }[]>;
+    findOne(id: number): Promise<{
+        id: number;
+        title: string;
+        super_category_id: number;
+    }>;
+    update(id: number, updateCategoryDto: UpdateCategoryDto): Promise<{
+        id: number;
+        title: string;
+        super_category_id: number;
+    }>;
+    remove(id: number): Promise<{
+        id: number;
+        title: string;
+        super_category_id: number;
+    }>;
 }

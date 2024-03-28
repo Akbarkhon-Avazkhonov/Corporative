@@ -10,6 +10,7 @@ import { OrdersModule } from './orders/orders.module';
 import { SuperCategoryModule } from './super-category/super-category.module';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { join } from 'path';
+import { AdminModule } from './admin/admin.module';
 @Module({
   imports: [
     AuthModule,
@@ -22,6 +23,7 @@ import { join } from 'path';
       rootPath: join(__dirname, '..', 'uploads'), // Path to the uploads directory
       serveRoot: '/uploads', // URL path to serve the files from
     }),
+    AdminModule,
   ],
   controllers: [AppController],
   providers: [AppService],
