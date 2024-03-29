@@ -20,7 +20,9 @@ export class AdminController {
   login(@Body() body) {
     return this.adminService.login(body.name, body.password);
   }
-
+  @ApiBody({
+    description: 'Get referral links count (just number)',
+  })
   @UseGuards(AuthGuard)
   @ApiBearerAuth()
   @Get('/referral/count')
@@ -28,6 +30,9 @@ export class AdminController {
     return this.adminService.getReferralCount();
   }
 
+  @ApiBody({
+    description: 'Get all balance (just number)',
+  })
   @UseGuards(AuthGuard)
   @ApiBearerAuth()
   @Get('/balance')
@@ -35,6 +40,9 @@ export class AdminController {
     return this.adminService.getBalance();
   }
 
+  @ApiBody({
+    description: 'Get top 10 users with the highest balance',
+  })
   @UseGuards(AuthGuard)
   @ApiBearerAuth()
   @Get('/top-referrals')
@@ -42,6 +50,9 @@ export class AdminController {
     return this.adminService.getTopReferrals();
   }
 
+  @ApiBody({
+    description: 'Get all users with pagination',
+  })
   @UseGuards(AuthGuard)
   @ApiBearerAuth()
   // get all users with pagination
@@ -50,6 +61,9 @@ export class AdminController {
     return this.adminService.getUsers(page);
   }
 
+  @ApiBody({
+    description: 'Get all products with pagination',
+  })
   @UseGuards(AuthGuard)
   @ApiBearerAuth()
   // get product with pagination
@@ -57,7 +71,10 @@ export class AdminController {
   getProducts(@Param('page') page: number) {
     return this.adminService.getProducts(page);
   }
-  // get new users by date 
+  // get new users by date
+  @ApiBody({
+    description: 'Get new users by date (last month and this month)',
+  })
   @UseGuards(AuthGuard)
   @ApiBearerAuth()
   @Get('/new-users')

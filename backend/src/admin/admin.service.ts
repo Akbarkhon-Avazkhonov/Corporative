@@ -102,7 +102,6 @@ export class AdminService {
   async getNewUsers() {
     //get all users that created in the last day
     const thisMonth = [];
-    
     // push {day: date} to thisMonth array
     const today = new Date().getDate();
     // this month
@@ -121,7 +120,7 @@ export class AdminService {
         }),
       });
     }
-    
+
     const lastMonth = [];
     // last month
     const numberOfDaysLastMonth = new Date(
