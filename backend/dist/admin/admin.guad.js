@@ -9,10 +9,10 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.AuthGuard = void 0;
+exports.AdminGuard = void 0;
 const common_1 = require("@nestjs/common");
 const jwt_1 = require("@nestjs/jwt");
-let AuthGuard = class AuthGuard {
+let AdminGuard = class AdminGuard {
     constructor(jwtService) {
         this.jwtService = jwtService;
     }
@@ -38,9 +38,9 @@ let AuthGuard = class AuthGuard {
         return type === 'Bearer' ? token : undefined;
     }
 };
-exports.AuthGuard = AuthGuard;
-exports.AuthGuard = AuthGuard = __decorate([
+exports.AdminGuard = AdminGuard;
+exports.AdminGuard = AdminGuard = __decorate([
     (0, common_1.Injectable)(),
     __metadata("design:paramtypes", [jwt_1.JwtService])
-], AuthGuard);
-//# sourceMappingURL=auth.guad.js.map
+], AdminGuard);
+//# sourceMappingURL=admin.guad.js.map

@@ -18,4 +18,9 @@ export declare class AuthService {
         email: string;
         balance: number;
     }>;
+    sendPhoneCode(number: string): Promise<boolean>;
+    verifyPhoneCode(number: string, code: number): Promise<boolean>;
+    sendSMS(number: string, message: string): Promise<boolean>;
+    getToken(): Promise<void>;
+    getRandomSixDigitNumber(): Promise<number>;
 }

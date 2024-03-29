@@ -19,6 +19,7 @@ const create_product_dto_1 = require("./dto/create-product.dto");
 const update_product_dto_1 = require("./dto/update-product.dto");
 const swagger_1 = require("@nestjs/swagger");
 const platform_express_1 = require("@nestjs/platform-express");
+const admin_guad_1 = require("../admin/admin.guad");
 let ProductsController = class ProductsController {
     constructor(productsService) {
         this.productsService = productsService;
@@ -47,6 +48,8 @@ let ProductsController = class ProductsController {
 };
 exports.ProductsController = ProductsController;
 __decorate([
+    (0, common_1.UseGuards)(admin_guad_1.AdminGuard),
+    (0, swagger_1.ApiBearerAuth)(),
     (0, swagger_1.ApiBody)({
         description: 'Create Product',
         schema: {
@@ -74,6 +77,8 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], ProductsController.prototype, "create", null);
 __decorate([
+    (0, common_1.UseGuards)(admin_guad_1.AdminGuard),
+    (0, swagger_1.ApiBearerAuth)(),
     (0, swagger_1.ApiConsumes)('multipart/form-data'),
     (0, swagger_1.ApiBody)({
         schema: {
@@ -117,6 +122,8 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], ProductsController.prototype, "findByCategory", null);
 __decorate([
+    (0, common_1.UseGuards)(admin_guad_1.AdminGuard),
+    (0, swagger_1.ApiBearerAuth)(),
     (0, common_1.Patch)(':id'),
     __param(0, (0, common_1.Param)('id')),
     __param(1, (0, common_1.Body)()),
@@ -125,6 +132,8 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], ProductsController.prototype, "update", null);
 __decorate([
+    (0, common_1.UseGuards)(admin_guad_1.AdminGuard),
+    (0, swagger_1.ApiBearerAuth)(),
     (0, common_1.Delete)(':id'),
     __param(0, (0, common_1.Param)('id')),
     __metadata("design:type", Function),

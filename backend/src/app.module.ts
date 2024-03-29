@@ -11,6 +11,7 @@ import { SuperCategoryModule } from './super-category/super-category.module';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { join } from 'path';
 import { AdminModule } from './admin/admin.module';
+import { GuidesModule } from './guides/guides.module';
 @Module({
   imports: [
     AuthModule,
@@ -24,6 +25,7 @@ import { AdminModule } from './admin/admin.module';
       serveRoot: '/uploads', // URL path to serve the files from
     }),
     AdminModule,
+    GuidesModule,
   ],
   controllers: [AppController],
   providers: [AppService],

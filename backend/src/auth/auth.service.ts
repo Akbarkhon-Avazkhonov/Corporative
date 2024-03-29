@@ -59,4 +59,101 @@ export class AuthService {
     }
     return { user_id: user.id, email: email, balance: user.balance };
   }
+
+  async sendPhoneCode(number: string) {
+    const code = await this.getRandomSixDigitNumber();
+    const message = `Ваш код подтверждения: ${code}`;
+    // save code to db  if not exist
+    await this.prisma.phoneCode.upsert({
+      where: { phone: number },
+      update: { code: code },
+      create: { phone: number, code: code },
+    });
+    await this.sendSMS(number, message);
+    return true;
+  }
+
+  async verifyPhoneCode(number: string, code: number) {
+    const phoneCode = await this.prisma.phoneCode.findUnique({
+      where: {
+        phone: number,
+        code: code,
+      },
+    });
+    if (!phoneCode) {
+      throw new HttpException('Invalid code', HttpStatus.UNAUTHORIZED);
+    }
+    return true;
+  }
+
+  async sendSMS(number: string, message: string) {
+    let TOKEN: any = await this.prisma.smsToken.findUnique({
+      where: { id: 1 },
+    });
+    if (!TOKEN) {
+      await this.getToken();
+    }
+    TOKEN = TOKEN.token;
+    const response = await fetch(process.env.SMS_URL + 'message/sms/send', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${TOKEN}`,
+      },
+      body: JSON.stringify({
+        mobile_phone: number,
+        message: message,
+        from: process.env.SMS_FROM,
+      }),
+    });
+    if (response.status !== 200) {
+      await this.getToken();
+      const response = await fetch(process.env.SMS_URL + 'message/sms/send', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${TOKEN}`,
+        },
+        body: JSON.stringify({
+          mobile_phone: number,
+          message: message,
+          from: process.env.SMS_FROM,
+        }),
+      });
+      if (response.status !== 200) {
+        throw new HttpException('SMS not sent', HttpStatus.BAD_REQUEST);
+      } else {
+        return true;
+      }
+    }
+    return true;
+  }
+  async getToken() {
+    const newToken = await fetch(process.env.SMS_URL + 'auth/login', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        email: process.env.SMS_EMAIL,
+        password: process.env.SMS_PASSWORD,
+      }),
+    })
+      .then((res) => res.json())
+      .catch((error) => {
+        throw new HttpException(error.message, HttpStatus.FORBIDDEN);
+      });
+
+    if (newToken.data.token) {
+      await this.prisma.smsToken.upsert({
+        where: { id: 1 },
+        update: { token: newToken.data.token },
+        create: { id: 1, token: newToken.data.token },
+      });
+    }
+  }
+  // get random 6 digit number
+  async getRandomSixDigitNumber() {
+    return Math.floor(100000 + Math.random() * 900000);
+  }
 }

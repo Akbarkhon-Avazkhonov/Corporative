@@ -18,6 +18,7 @@ const category_service_1 = require("./category.service");
 const create_category_dto_1 = require("./dto/create-category.dto");
 const update_category_dto_1 = require("./dto/update-category.dto");
 const swagger_1 = require("@nestjs/swagger");
+const admin_guad_1 = require("../admin/admin.guad");
 let CategoryController = class CategoryController {
     constructor(categoryService) {
         this.categoryService = categoryService;
@@ -50,6 +51,8 @@ __decorate([
             },
         },
     }),
+    (0, common_1.UseGuards)(admin_guad_1.AdminGuard),
+    (0, swagger_1.ApiBearerAuth)(),
     (0, common_1.Post)(),
     __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
@@ -70,6 +73,8 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], CategoryController.prototype, "findOne", null);
 __decorate([
+    (0, common_1.UseGuards)(admin_guad_1.AdminGuard),
+    (0, swagger_1.ApiBearerAuth)(),
     (0, common_1.Patch)(':id'),
     __param(0, (0, common_1.Param)('id')),
     __param(1, (0, common_1.Body)()),
@@ -78,6 +83,8 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], CategoryController.prototype, "update", null);
 __decorate([
+    (0, common_1.UseGuards)(admin_guad_1.AdminGuard),
+    (0, swagger_1.ApiBearerAuth)(),
     (0, common_1.Delete)(':id'),
     __param(0, (0, common_1.Param)('id')),
     __metadata("design:type", Function),

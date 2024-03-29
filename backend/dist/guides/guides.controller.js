@@ -12,75 +12,86 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.OrdersController = void 0;
+exports.GuidesController = void 0;
 const common_1 = require("@nestjs/common");
-const orders_service_1 = require("./orders.service");
-const create_order_dto_1 = require("./dto/create-order.dto");
-const update_order_dto_1 = require("./dto/update-order.dto");
+const guides_service_1 = require("./guides.service");
+const create_guide_dto_1 = require("./dto/create-guide.dto");
+const update_guide_dto_1 = require("./dto/update-guide.dto");
 const swagger_1 = require("@nestjs/swagger");
 const admin_guad_1 = require("../admin/admin.guad");
-let OrdersController = class OrdersController {
-    constructor(ordersService) {
-        this.ordersService = ordersService;
+let GuidesController = class GuidesController {
+    constructor(guidesService) {
+        this.guidesService = guidesService;
     }
-    create(createOrderDto) {
-        return this.ordersService.create(createOrderDto);
+    create(createGuideDto) {
+        return this.guidesService.create(createGuideDto);
     }
     findAll() {
-        return this.ordersService.findAll();
+        return this.guidesService.findAll();
     }
     findOne(id) {
-        return this.ordersService.findOne(+id);
+        return this.guidesService.findOne(+id);
     }
-    update(id, updateOrderDto) {
-        return this.ordersService.update(+id, updateOrderDto);
+    update(id, updateGuideDto) {
+        return this.guidesService.update(+id, updateGuideDto);
     }
     remove(id) {
-        return this.ordersService.remove(+id);
+        return this.guidesService.remove(+id);
     }
 };
-exports.OrdersController = OrdersController;
+exports.GuidesController = GuidesController;
 __decorate([
+    (0, common_1.UseGuards)(admin_guad_1.AdminGuard),
+    (0, swagger_1.ApiBearerAuth)(),
     (0, swagger_1.ApiBody)({
         schema: {
             type: 'object',
             properties: {
-                name: { type: 'string' },
-                surname: { type: 'string' },
-                phone: { type: 'string' },
-                city: { type: 'string' },
-                product_id: { type: 'number' },
-                count: { type: 'number' },
+                title: { type: 'string' },
+                subtitle: { type: 'string' },
+                description: { type: 'string' },
             },
         },
     }),
     (0, common_1.Post)(),
     __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [create_order_dto_1.CreateOrderDto]),
+    __metadata("design:paramtypes", [create_guide_dto_1.CreateGuideDto]),
     __metadata("design:returntype", void 0)
-], OrdersController.prototype, "create", null);
+], GuidesController.prototype, "create", null);
 __decorate([
     (0, common_1.Get)(),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", void 0)
-], OrdersController.prototype, "findAll", null);
+], GuidesController.prototype, "findAll", null);
 __decorate([
     (0, common_1.Get)(':id'),
     __param(0, (0, common_1.Param)('id')),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String]),
     __metadata("design:returntype", void 0)
-], OrdersController.prototype, "findOne", null);
+], GuidesController.prototype, "findOne", null);
 __decorate([
+    (0, common_1.UseGuards)(admin_guad_1.AdminGuard),
+    (0, swagger_1.ApiBearerAuth)(),
+    (0, swagger_1.ApiBody)({
+        schema: {
+            type: 'object',
+            properties: {
+                title: { type: 'string' },
+                subtitle: { type: 'string' },
+                description: { type: 'string' },
+            },
+        },
+    }),
     (0, common_1.Patch)(':id'),
     __param(0, (0, common_1.Param)('id')),
     __param(1, (0, common_1.Body)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String, update_order_dto_1.UpdateOrderDto]),
+    __metadata("design:paramtypes", [String, update_guide_dto_1.UpdateGuideDto]),
     __metadata("design:returntype", void 0)
-], OrdersController.prototype, "update", null);
+], GuidesController.prototype, "update", null);
 __decorate([
     (0, common_1.UseGuards)(admin_guad_1.AdminGuard),
     (0, swagger_1.ApiBearerAuth)(),
@@ -89,10 +100,10 @@ __decorate([
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String]),
     __metadata("design:returntype", void 0)
-], OrdersController.prototype, "remove", null);
-exports.OrdersController = OrdersController = __decorate([
-    (0, swagger_1.ApiTags)('Orders'),
-    (0, common_1.Controller)('orders'),
-    __metadata("design:paramtypes", [orders_service_1.OrdersService])
-], OrdersController);
-//# sourceMappingURL=orders.controller.js.map
+], GuidesController.prototype, "remove", null);
+exports.GuidesController = GuidesController = __decorate([
+    (0, swagger_1.ApiTags)('Guides'),
+    (0, common_1.Controller)('guides'),
+    __metadata("design:paramtypes", [guides_service_1.GuidesService])
+], GuidesController);
+//# sourceMappingURL=guides.controller.js.map

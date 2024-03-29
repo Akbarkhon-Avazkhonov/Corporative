@@ -19,6 +19,7 @@ const super_category_module_1 = require("./super-category/super-category.module"
 const serve_static_1 = require("@nestjs/serve-static");
 const path_1 = require("path");
 const admin_module_1 = require("./admin/admin.module");
+const guides_module_1 = require("./guides/guides.module");
 let AppModule = class AppModule {
 };
 exports.AppModule = AppModule;
@@ -36,6 +37,7 @@ exports.AppModule = AppModule = __decorate([
                 serveRoot: '/uploads',
             }),
             admin_module_1.AdminModule,
+            guides_module_1.GuidesModule,
         ],
         controllers: [app_controller_1.AppController],
         providers: [app_service_1.AppService],

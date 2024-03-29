@@ -23,12 +23,15 @@ import {
 } from '@nestjs/swagger';
 import { AuthGuard } from 'src/auth/auth.guad';
 import { FileInterceptor } from '@nestjs/platform-express';
+import { AdminGuard } from 'src/admin/admin.guad';
 
 @ApiTags('Products')
 @Controller('products')
 export class ProductsController {
   constructor(private readonly productsService: ProductsService) {}
 
+  @UseGuards(AdminGuard)
+  @ApiBearerAuth()
   @ApiBody({
     description: 'Create Product',
     schema: {
@@ -54,6 +57,8 @@ export class ProductsController {
     return this.productsService.create(createProductDto);
   }
 
+  @UseGuards(AdminGuard)
+  @ApiBearerAuth()
   @ApiConsumes('multipart/form-data')
   @ApiBody({
     schema: {
@@ -90,11 +95,15 @@ export class ProductsController {
     return this.productsService.findByCategory(+category_id);
   }
 
+  @UseGuards(AdminGuard)
+  @ApiBearerAuth()
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateProductDto: UpdateProductDto) {
     return this.productsService.update(+id, updateProductDto);
   }
-
+  
+  @UseGuards(AdminGuard)
+  @ApiBearerAuth()
   @Delete(':id')
   remove(@Param('id') id: string) {
     return this.productsService.remove(+id);

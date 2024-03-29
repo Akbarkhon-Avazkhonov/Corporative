@@ -18,6 +18,7 @@ const super_category_service_1 = require("./super-category.service");
 const create_super_category_dto_1 = require("./dto/create-super-category.dto");
 const update_super_category_dto_1 = require("./dto/update-super-category.dto");
 const swagger_1 = require("@nestjs/swagger");
+const admin_guad_1 = require("../admin/admin.guad");
 let SuperCategoryController = class SuperCategoryController {
     constructor(superCategoryService) {
         this.superCategoryService = superCategoryService;
@@ -40,6 +41,8 @@ let SuperCategoryController = class SuperCategoryController {
 };
 exports.SuperCategoryController = SuperCategoryController;
 __decorate([
+    (0, common_1.UseGuards)(admin_guad_1.AdminGuard),
+    (0, swagger_1.ApiBearerAuth)(),
     (0, swagger_1.ApiBody)({
         description: 'Create Super Category',
         schema: {
@@ -69,6 +72,8 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], SuperCategoryController.prototype, "findOne", null);
 __decorate([
+    (0, common_1.UseGuards)(admin_guad_1.AdminGuard),
+    (0, swagger_1.ApiBearerAuth)(),
     (0, common_1.Patch)(':id'),
     __param(0, (0, common_1.Param)('id')),
     __param(1, (0, common_1.Body)()),
@@ -77,6 +82,8 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], SuperCategoryController.prototype, "update", null);
 __decorate([
+    (0, common_1.UseGuards)(admin_guad_1.AdminGuard),
+    (0, swagger_1.ApiBearerAuth)(),
     (0, common_1.Delete)(':id'),
     __param(0, (0, common_1.Param)('id')),
     __metadata("design:type", Function),

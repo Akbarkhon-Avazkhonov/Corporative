@@ -15,7 +15,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.AdminController = void 0;
 const common_1 = require("@nestjs/common");
 const admin_service_1 = require("./admin.service");
-const auth_guad_1 = require("./auth.guad");
+const admin_guad_1 = require("./admin.guad");
 const swagger_1 = require("@nestjs/swagger");
 let AdminController = class AdminController {
     constructor(adminService) {
@@ -62,10 +62,10 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], AdminController.prototype, "login", null);
 __decorate([
-    (0, swagger_1.ApiOkResponse)({
+    (0, swagger_1.ApiOperation)({
         description: 'Get referral links count (just number)',
     }),
-    (0, common_1.UseGuards)(auth_guad_1.AuthGuard),
+    (0, common_1.UseGuards)(admin_guad_1.AdminGuard),
     (0, swagger_1.ApiBearerAuth)(),
     (0, common_1.Get)('/referral/count'),
     __metadata("design:type", Function),
@@ -73,10 +73,10 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], AdminController.prototype, "getReferralCount", null);
 __decorate([
-    (0, swagger_1.ApiOkResponse)({
+    (0, swagger_1.ApiOperation)({
         description: 'Get all balance (just number)',
     }),
-    (0, common_1.UseGuards)(auth_guad_1.AuthGuard),
+    (0, common_1.UseGuards)(admin_guad_1.AdminGuard),
     (0, swagger_1.ApiBearerAuth)(),
     (0, common_1.Get)('/balance'),
     __metadata("design:type", Function),
@@ -84,10 +84,10 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], AdminController.prototype, "getBalance", null);
 __decorate([
-    (0, swagger_1.ApiOkResponse)({
+    (0, swagger_1.ApiOperation)({
         description: 'Get top 10 users with the highest balance',
     }),
-    (0, common_1.UseGuards)(auth_guad_1.AuthGuard),
+    (0, common_1.UseGuards)(admin_guad_1.AdminGuard),
     (0, swagger_1.ApiBearerAuth)(),
     (0, common_1.Get)('/top-referrals'),
     __metadata("design:type", Function),
@@ -95,10 +95,10 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], AdminController.prototype, "getTopReferrals", null);
 __decorate([
-    (0, swagger_1.ApiOkResponse)({
+    (0, swagger_1.ApiOperation)({
         description: 'Get all users with pagination',
     }),
-    (0, common_1.UseGuards)(auth_guad_1.AuthGuard),
+    (0, common_1.UseGuards)(admin_guad_1.AdminGuard),
     (0, swagger_1.ApiBearerAuth)(),
     (0, common_1.Get)('/users/:page'),
     __param(0, (0, common_1.Param)('page')),
@@ -107,10 +107,10 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], AdminController.prototype, "getUsers", null);
 __decorate([
-    (0, swagger_1.ApiOkResponse)({
+    (0, swagger_1.ApiOperation)({
         description: 'Get all products with pagination',
     }),
-    (0, common_1.UseGuards)(auth_guad_1.AuthGuard),
+    (0, common_1.UseGuards)(admin_guad_1.AdminGuard),
     (0, swagger_1.ApiBearerAuth)(),
     (0, common_1.Get)('/products/:page'),
     __param(0, (0, common_1.Param)('page')),
@@ -119,10 +119,10 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], AdminController.prototype, "getProducts", null);
 __decorate([
-    (0, swagger_1.ApiOkResponse)({
+    (0, swagger_1.ApiOperation)({
         description: 'Get new users by date',
     }),
-    (0, common_1.UseGuards)(auth_guad_1.AuthGuard),
+    (0, common_1.UseGuards)(admin_guad_1.AdminGuard),
     (0, swagger_1.ApiBearerAuth)(),
     (0, common_1.Get)('/new-users'),
     __metadata("design:type", Function),

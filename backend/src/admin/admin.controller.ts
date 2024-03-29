@@ -1,12 +1,7 @@
 import { Controller, Get, Post, Body, UseGuards, Param } from '@nestjs/common';
 import { AdminService } from './admin.service';
-import { AuthGuard } from './auth.guad';
-import {
-  ApiBearerAuth,
-  ApiBody,
-  ApiOkResponse,
-  ApiTags,
-} from '@nestjs/swagger';
+import { AdminGuard } from './admin.guad';
+import { ApiBearerAuth, ApiBody, ApiOperation, ApiTags } from '@nestjs/swagger';
 
 @ApiTags('Admin')
 @Controller('admin')
@@ -26,40 +21,40 @@ export class AdminController {
   login(@Body() body) {
     return this.adminService.login(body.name, body.password);
   }
-  @ApiOkResponse({
+  @ApiOperation({
     description: 'Get referral links count (just number)',
   })
-  @UseGuards(AuthGuard)
+  @UseGuards(AdminGuard)
   @ApiBearerAuth()
   @Get('/referral/count')
   getReferralCount() {
     return this.adminService.getReferralCount();
   }
 
-  @ApiOkResponse({
+  @ApiOperation({
     description: 'Get all balance (just number)',
   })
-  @UseGuards(AuthGuard)
+  @UseGuards(AdminGuard)
   @ApiBearerAuth()
   @Get('/balance')
   getBalance() {
     return this.adminService.getBalance();
   }
 
-  @ApiOkResponse({
+  @ApiOperation({
     description: 'Get top 10 users with the highest balance',
   })
-  @UseGuards(AuthGuard)
+  @UseGuards(AdminGuard)
   @ApiBearerAuth()
   @Get('/top-referrals')
   getTopReferrals() {
     return this.adminService.getTopReferrals();
   }
 
-  @ApiOkResponse({
+  @ApiOperation({
     description: 'Get all users with pagination',
   })
-  @UseGuards(AuthGuard)
+  @UseGuards(AdminGuard)
   @ApiBearerAuth()
   // get all users with pagination
   @Get('/users/:page')
@@ -67,10 +62,10 @@ export class AdminController {
     return this.adminService.getUsers(page);
   }
 
-  @ApiOkResponse({
+  @ApiOperation({
     description: 'Get all products with pagination',
   })
-  @UseGuards(AuthGuard)
+  @UseGuards(AdminGuard)
   @ApiBearerAuth()
   // get product with pagination
   @Get('/products/:page')
@@ -79,10 +74,10 @@ export class AdminController {
   }
   // get new users by date
 
-  @ApiOkResponse({
+  @ApiOperation({
     description: 'Get new users by date',
   })
-  @UseGuards(AuthGuard)
+  @UseGuards(AdminGuard)
   @ApiBearerAuth()
   @Get('/new-users')
   getNewUsers() {

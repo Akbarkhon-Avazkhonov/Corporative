@@ -12,7 +12,7 @@ import { CategoryService } from './category.service';
 import { CreateCategoryDto } from './dto/create-category.dto';
 import { UpdateCategoryDto } from './dto/update-category.dto';
 import { ApiBearerAuth, ApiBody, ApiTags } from '@nestjs/swagger';
-import { AuthGuard } from 'src/auth/auth.guad';
+import { AdminGuard } from 'src/admin/admin.guad';
 
 @ApiTags('Category')
 // @UseGuards(AuthGuard)
@@ -30,6 +30,8 @@ export class CategoryController {
       },
     },
   })
+  @UseGuards(AdminGuard)
+  @ApiBearerAuth()
   @Post()
   create(@Body() createCategoryDto: CreateCategoryDto) {
     return this.categoryService.create(createCategoryDto);
@@ -45,6 +47,8 @@ export class CategoryController {
     return this.categoryService.findOne(+id);
   }
 
+  @UseGuards(AdminGuard)
+  @ApiBearerAuth()
   @Patch(':id')
   update(
     @Param('id') id: string,
@@ -53,6 +57,8 @@ export class CategoryController {
     return this.categoryService.update(+id, updateCategoryDto);
   }
 
+  @UseGuards(AdminGuard)
+  @ApiBearerAuth()
   @Delete(':id')
   remove(@Param('id') id: string) {
     return this.categoryService.remove(+id);

@@ -25,6 +25,12 @@ let AuthController = class AuthController {
     async registerUser(body) {
         return this.authService.createUser(body);
     }
+    async sendPhoneCode(body) {
+        return this.authService.sendPhoneCode(body.phone_number);
+    }
+    async verifyPhoneCode(body) {
+        return this.authService.verifyPhoneCode(body.phone_number, body.code);
+    }
     async login(body) {
         return this.authService.login(body.email, body.password);
     }
@@ -63,6 +69,39 @@ __decorate([
     __metadata("design:paramtypes", [auth_product_dto_1.CreateUserDto]),
     __metadata("design:returntype", Promise)
 ], AuthController.prototype, "registerUser", null);
+__decorate([
+    (0, swagger_1.ApiBody)({
+        description: 'Send Phone Code',
+        schema: {
+            type: 'object',
+            properties: {
+                phone_number: { type: 'string' },
+            },
+        },
+    }),
+    (0, common_1.Post)('send-phone-code'),
+    __param(0, (0, common_1.Body)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object]),
+    __metadata("design:returntype", Promise)
+], AuthController.prototype, "sendPhoneCode", null);
+__decorate([
+    (0, swagger_1.ApiBody)({
+        description: 'Verify Phone Code',
+        schema: {
+            type: 'object',
+            properties: {
+                phone_number: { type: 'string' },
+                code: { type: 'number' },
+            },
+        },
+    }),
+    (0, common_1.Post)('verify-phone-code'),
+    __param(0, (0, common_1.Body)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object]),
+    __metadata("design:returntype", Promise)
+], AuthController.prototype, "verifyPhoneCode", null);
 __decorate([
     (0, swagger_1.ApiOperation)({
         description: 'JWT token validation endpoint',

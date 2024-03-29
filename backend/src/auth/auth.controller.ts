@@ -55,6 +55,36 @@ export class AuthController {
     return this.authService.createUser(body);
   }
 
+  @ApiBody({
+    description: 'Send Phone Code',
+    schema: {
+      type: 'object',
+      properties: {
+        phone_number: { type: 'string' },
+      },
+    },
+  })
+  @Post('send-phone-code')
+  async sendPhoneCode(@Body() body: { phone_number: string }) {
+    return this.authService.sendPhoneCode(body.phone_number);
+  }
+
+  @ApiBody({
+    description: 'Verify Phone Code',
+    schema: {
+      type: 'object',
+      properties: {
+        phone_number: { type: 'string' },
+        code: { type: 'number' },
+      },
+    },
+  })
+  @Post('verify-phone-code')
+  async verifyPhoneCode(@Body() body: { phone_number: string; code: number }) {
+    return this.authService.verifyPhoneCode(body.phone_number, body.code);
+  }
+
+
   @ApiOperation({
     description: 'JWT token validation endpoint',
   })
