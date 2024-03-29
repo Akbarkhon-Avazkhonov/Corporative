@@ -46,6 +46,7 @@ let AdminController = class AdminController {
 exports.AdminController = AdminController;
 __decorate([
     (0, swagger_1.ApiBody)({
+        description: 'Login with admin name and password',
         schema: {
             type: 'object',
             properties: {
@@ -61,6 +62,9 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], AdminController.prototype, "login", null);
 __decorate([
+    (0, swagger_1.ApiOkResponse)({
+        description: 'Get referral links count (just number)',
+    }),
     (0, common_1.UseGuards)(auth_guad_1.AuthGuard),
     (0, swagger_1.ApiBearerAuth)(),
     (0, common_1.Get)('/referral/count'),
@@ -69,6 +73,9 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], AdminController.prototype, "getReferralCount", null);
 __decorate([
+    (0, swagger_1.ApiOkResponse)({
+        description: 'Get all balance (just number)',
+    }),
     (0, common_1.UseGuards)(auth_guad_1.AuthGuard),
     (0, swagger_1.ApiBearerAuth)(),
     (0, common_1.Get)('/balance'),
@@ -77,6 +84,9 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], AdminController.prototype, "getBalance", null);
 __decorate([
+    (0, swagger_1.ApiOkResponse)({
+        description: 'Get top 10 users with the highest balance',
+    }),
     (0, common_1.UseGuards)(auth_guad_1.AuthGuard),
     (0, swagger_1.ApiBearerAuth)(),
     (0, common_1.Get)('/top-referrals'),
@@ -85,6 +95,9 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], AdminController.prototype, "getTopReferrals", null);
 __decorate([
+    (0, swagger_1.ApiOkResponse)({
+        description: 'Get all users with pagination',
+    }),
     (0, common_1.UseGuards)(auth_guad_1.AuthGuard),
     (0, swagger_1.ApiBearerAuth)(),
     (0, common_1.Get)('/users/:page'),
@@ -94,6 +107,9 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], AdminController.prototype, "getUsers", null);
 __decorate([
+    (0, swagger_1.ApiOkResponse)({
+        description: 'Get all products with pagination',
+    }),
     (0, common_1.UseGuards)(auth_guad_1.AuthGuard),
     (0, swagger_1.ApiBearerAuth)(),
     (0, common_1.Get)('/products/:page'),
@@ -103,6 +119,9 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], AdminController.prototype, "getProducts", null);
 __decorate([
+    (0, swagger_1.ApiOkResponse)({
+        description: 'Get new users by date',
+    }),
     (0, common_1.UseGuards)(auth_guad_1.AuthGuard),
     (0, swagger_1.ApiBearerAuth)(),
     (0, common_1.Get)('/new-users'),

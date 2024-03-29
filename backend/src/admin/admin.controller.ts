@@ -1,13 +1,19 @@
 import { Controller, Get, Post, Body, UseGuards, Param } from '@nestjs/common';
 import { AdminService } from './admin.service';
 import { AuthGuard } from './auth.guad';
-import { ApiBearerAuth, ApiBody, ApiTags } from '@nestjs/swagger';
+import {
+  ApiBearerAuth,
+  ApiBody,
+  ApiOkResponse,
+  ApiTags,
+} from '@nestjs/swagger';
 
 @ApiTags('Admin')
 @Controller('admin')
 export class AdminController {
   constructor(private readonly adminService: AdminService) {}
   @ApiBody({
+    description: 'Login with admin name and password',
     schema: {
       type: 'object',
       properties: {
@@ -20,7 +26,7 @@ export class AdminController {
   login(@Body() body) {
     return this.adminService.login(body.name, body.password);
   }
-  @ApiBody({
+  @ApiOkResponse({
     description: 'Get referral links count (just number)',
   })
   @UseGuards(AuthGuard)
@@ -30,7 +36,7 @@ export class AdminController {
     return this.adminService.getReferralCount();
   }
 
-  @ApiBody({
+  @ApiOkResponse({
     description: 'Get all balance (just number)',
   })
   @UseGuards(AuthGuard)
@@ -40,7 +46,7 @@ export class AdminController {
     return this.adminService.getBalance();
   }
 
-  @ApiBody({
+  @ApiOkResponse({
     description: 'Get top 10 users with the highest balance',
   })
   @UseGuards(AuthGuard)
@@ -50,7 +56,7 @@ export class AdminController {
     return this.adminService.getTopReferrals();
   }
 
-  @ApiBody({
+  @ApiOkResponse({
     description: 'Get all users with pagination',
   })
   @UseGuards(AuthGuard)
@@ -61,7 +67,7 @@ export class AdminController {
     return this.adminService.getUsers(page);
   }
 
-  @ApiBody({
+  @ApiOkResponse({
     description: 'Get all products with pagination',
   })
   @UseGuards(AuthGuard)
@@ -72,8 +78,9 @@ export class AdminController {
     return this.adminService.getProducts(page);
   }
   // get new users by date
-  @ApiBody({
-    description: 'Get new users by date (last month and this month)',
+
+  @ApiOkResponse({
+    description: 'Get new users by date',
   })
   @UseGuards(AuthGuard)
   @ApiBearerAuth()
