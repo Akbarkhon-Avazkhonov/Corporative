@@ -22,17 +22,18 @@ let ReferralController = class ReferralController {
     constructor(referralService) {
         this.referralService = referralService;
     }
-    create(createReferralDto) {
+    create(createReferralDto, req) {
+        createReferralDto.user_id = req.user_id;
         return this.referralService.create(createReferralDto);
     }
-    findAll(user_id) {
-        return this.referralService.findAll(+user_id);
+    findAll(req) {
+        return this.referralService.findAll(req.user_id);
     }
-    findOne(id) {
-        return this.referralService.findOne(+id);
+    findOne(id, req) {
+        return this.referralService.findOne(+id, req.user_id);
     }
-    deleteOne(id) {
-        return this.referralService.deleteOne(+id);
+    deleteOne(id, req) {
+        return this.referralService.deleteOne(+id, req.user_id);
     }
 };
 exports.ReferralController = ReferralController;
@@ -41,38 +42,39 @@ __decorate([
         schema: {
             type: 'object',
             properties: {
-                user_id: { type: 'number' },
                 product_id: { type: 'number' },
-                category_id: { type: 'number' },
                 title: { type: 'string' },
             },
         },
     }),
     (0, common_1.Post)(),
     __param(0, (0, common_1.Body)()),
+    __param(1, (0, common_1.Request)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [create_referral_dto_1.CreateReferralDto]),
+    __metadata("design:paramtypes", [create_referral_dto_1.CreateReferralDto, Object]),
     __metadata("design:returntype", void 0)
 ], ReferralController.prototype, "create", null);
 __decorate([
-    (0, common_1.Get)(':user_id'),
-    __param(0, (0, common_1.Param)('user_id')),
+    (0, common_1.Get)(''),
+    __param(0, (0, common_1.Request)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String]),
+    __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", void 0)
 ], ReferralController.prototype, "findAll", null);
 __decorate([
     (0, common_1.Get)('id/:id'),
     __param(0, (0, common_1.Param)('id')),
+    __param(1, (0, common_1.Request)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Number]),
+    __metadata("design:paramtypes", [Number, Object]),
     __metadata("design:returntype", void 0)
 ], ReferralController.prototype, "findOne", null);
 __decorate([
     (0, common_1.Delete)(':id'),
     __param(0, (0, common_1.Param)('id')),
+    __param(1, (0, common_1.Request)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Number]),
+    __metadata("design:paramtypes", [Number, Object]),
     __metadata("design:returntype", void 0)
 ], ReferralController.prototype, "deleteOne", null);
 exports.ReferralController = ReferralController = __decorate([

@@ -57,7 +57,13 @@ export class AuthService {
     if (!user) {
       throw new HttpException('User not found', HttpStatus.NOT_FOUND);
     }
-    return { user_id: user.id, email: email, balance: user.balance };
+    return {
+      id: user.id,
+      fullname: user.fullname,
+      phone_number: user.phone_number,
+      email: email,
+      balance: user.balance,
+    };
   }
 
   async sendPhoneCode(number: string) {

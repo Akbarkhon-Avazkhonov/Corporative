@@ -29,13 +29,15 @@ let ReferralService = class ReferralService {
             where: { user_id: user_id },
         });
     }
-    async findOne(id) {
+    async findOne(id, user_id) {
         return await this.prisma.link.findUnique({
-            where: { id: id },
+            where: { id: id, user_id: user_id },
         });
     }
-    async deleteOne(id) {
-        if (!(await this.prisma.link.findUnique({ where: { id: id } }))) {
+    async deleteOne(id, user_id) {
+        if (!(await this.prisma.link.findUnique({
+            where: { id: id, user_id: user_id },
+        }))) {
             throw new common_1.HttpException('Link not found', common_1.HttpStatus.NOT_FOUND);
         }
         return await this.prisma.link.delete({ where: { id: id } });

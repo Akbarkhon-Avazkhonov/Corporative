@@ -6,7 +6,6 @@ export declare class ReferralService {
     create(createReferralDto: CreateReferralDto): Promise<{
         id: number;
         title: string;
-        category_id: number;
         product_id: number;
         user_id: number;
         url_link: string;
@@ -15,25 +14,22 @@ export declare class ReferralService {
     findAll(user_id: number): Promise<{
         id: number;
         title: string;
-        category_id: number;
         product_id: number;
         user_id: number;
         url_link: string;
         created_at: Date;
     }[]>;
-    findOne(id: number): Promise<{
+    findOne(id: number, user_id: number): Promise<{
         id: number;
         title: string;
-        category_id: number;
         product_id: number;
         user_id: number;
         url_link: string;
         created_at: Date;
     }>;
-    deleteOne(id: number): Promise<{
+    deleteOne(id: number, user_id: number): Promise<{
         id: number;
         title: string;
-        category_id: number;
         product_id: number;
         user_id: number;
         url_link: string;

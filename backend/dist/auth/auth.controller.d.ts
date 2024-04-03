@@ -21,8 +21,10 @@ export declare class AuthController {
         access_token: string;
         user_id: number;
     }>;
-    getProfile(headers: any, req: any): Promise<{
-        user_id: number;
+    getProfile(req: any): Promise<{
+        id: number;
+        fullname: string;
+        phone_number: string;
         email: string;
         balance: number;
     }>;

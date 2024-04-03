@@ -34,8 +34,8 @@ let AuthController = class AuthController {
     async login(body) {
         return this.authService.login(body.email, body.password);
     }
-    async getProfile(headers, req) {
-        return this.authService.getProfile(req.email.email);
+    async getProfile(req) {
+        return this.authService.getProfile(req.email);
     }
 };
 exports.AuthController = AuthController;
@@ -128,10 +128,9 @@ __decorate([
     (0, common_1.UseGuards)(auth_guad_1.AuthGuard),
     (0, swagger_1.ApiBearerAuth)(),
     (0, common_1.Get)('profile'),
-    __param(0, (0, common_1.Headers)()),
-    __param(1, (0, common_1.Request)()),
+    __param(0, (0, common_1.Request)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object, Object]),
+    __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", Promise)
 ], AuthController.prototype, "getProfile", null);
 exports.AuthController = AuthController = __decorate([

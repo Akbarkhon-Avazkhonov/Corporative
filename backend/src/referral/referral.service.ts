@@ -20,14 +20,18 @@ export class ReferralService {
     });
   }
 
-  async findOne(id: number) {
+  async findOne(id: number, user_id: number) {
     return await this.prisma.link.findUnique({
-      where: { id: id },
+      where: { id: id, user_id: user_id },
     });
   }
 
-  async deleteOne(id: number) {
-    if (!(await this.prisma.link.findUnique({ where: { id: id } }))) {
+  async deleteOne(id: number, user_id: number) {
+    if (
+      !(await this.prisma.link.findUnique({
+        where: { id: id, user_id: user_id },
+      }))
+    ) {
       throw new HttpException('Link not found', HttpStatus.NOT_FOUND);
     }
     return await this.prisma.link.delete({ where: { id: id } });

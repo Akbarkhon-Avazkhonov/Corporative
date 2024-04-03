@@ -48,6 +48,28 @@ export class OrdersController {
   }
 
 
+  @UseGuards(AdminGuard)
+  @ApiBearerAuth()
+  @ApiBody({
+    schema: {
+      type: 'object',
+      properties: {
+        order_id: { type: 'number' },
+        status: { type: 'string' },
+      },
+    },
+  })
+  @Post('/orderStatus')
+  updateOrderStatus(
+    @Body()
+    updateOrderDto: {
+      order_id: number;
+      status: string;
+    },
+  ) {
+    return this.ordersService.updateOrderStatus(updateOrderDto);
+  }
+
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateOrderDto: UpdateOrderDto) {
     return this.ordersService.update(+id, updateOrderDto);

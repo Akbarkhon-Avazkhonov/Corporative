@@ -43,7 +43,11 @@ export declare class SuperCategoryController {
         title: string;
     }>;
     remove(id: string): Promise<{
-        id: number;
-        title: string;
+        superCategory: {
+            id: number;
+            title: string;
+        };
+        categories: import(".prisma/client").Prisma.BatchPayload;
+        products: import(".prisma/client").Prisma.BatchPayload;
     }>;
 }

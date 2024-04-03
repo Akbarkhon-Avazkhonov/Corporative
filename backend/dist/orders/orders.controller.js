@@ -32,6 +32,9 @@ let OrdersController = class OrdersController {
     findOne(id) {
         return this.ordersService.findOne(+id);
     }
+    updateOrderStatus(updateOrderDto) {
+        return this.ordersService.updateOrderStatus(updateOrderDto);
+    }
     update(id, updateOrderDto) {
         return this.ordersService.update(+id, updateOrderDto);
     }
@@ -73,6 +76,24 @@ __decorate([
     __metadata("design:paramtypes", [String]),
     __metadata("design:returntype", void 0)
 ], OrdersController.prototype, "findOne", null);
+__decorate([
+    (0, common_1.UseGuards)(admin_guad_1.AdminGuard),
+    (0, swagger_1.ApiBearerAuth)(),
+    (0, swagger_1.ApiBody)({
+        schema: {
+            type: 'object',
+            properties: {
+                order_id: { type: 'number' },
+                status: { type: 'string' },
+            },
+        },
+    }),
+    (0, common_1.Post)('/orderStatus'),
+    __param(0, (0, common_1.Body)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object]),
+    __metadata("design:returntype", void 0)
+], OrdersController.prototype, "updateOrderStatus", null);
 __decorate([
     (0, common_1.Patch)(':id'),
     __param(0, (0, common_1.Param)('id')),

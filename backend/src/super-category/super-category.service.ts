@@ -60,10 +60,44 @@ export class SuperCategoryService {
   }
 
   async remove(id: number) {
-    return await this.prisma.superCategory.delete({
+    // take super categories id
+    const categories_id = await this.prisma.category.findMany({
+      where: {
+        super_category_id: id,
+      },
+      select: {
+        id: true,
+      },
+    });
+    // make an array of categories id
+    const categoriesId = categories_id.map((category) => category.id);
+
+    // delete super category
+    const superCategory = await this.prisma.superCategory.delete({
       where: {
         id: id,
       },
     });
+    // delete categories
+    const categories = await this.prisma.category.deleteMany({
+      where: {
+        id: {
+          in: categoriesId,
+        },
+      },
+    });
+    // delete products
+    const products = await this.prisma.product.deleteMany({
+      where: {
+        category_id: {
+          in: categoriesId,
+        },
+      },
+    });
+    return {
+      superCategory,
+      categories,
+      products,
+    };
   }
 }

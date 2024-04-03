@@ -25,8 +25,11 @@ export declare class CategoryService {
         super_category_id: number;
     }>;
     remove(id: number): Promise<{
-        id: number;
-        title: string;
-        super_category_id: number;
+        category: {
+            id: number;
+            title: string;
+            super_category_id: number;
+        };
+        products: import(".prisma/client").Prisma.BatchPayload;
     }>;
 }

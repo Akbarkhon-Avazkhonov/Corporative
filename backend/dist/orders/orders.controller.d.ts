@@ -19,6 +19,22 @@ export declare class OrdersController {
     }, never, import("@prisma/client/runtime/library").DefaultArgs>;
     findAll(): string;
     findOne(id: string): string;
+    updateOrderStatus(updateOrderDto: {
+        order_id: number;
+        status: string;
+    }): import(".prisma/client").Prisma.Prisma__OrdersClient<{
+        id: number;
+        name: string;
+        surname: string;
+        phone: string;
+        city: string;
+        product_id: number;
+        count: number;
+        status: string;
+        referral_id: number;
+        link_id: number;
+        created_at: Date;
+    }, never, import("@prisma/client/runtime/library").DefaultArgs>;
     update(id: string, updateOrderDto: UpdateOrderDto): string;
     remove(id: string): string;
 }

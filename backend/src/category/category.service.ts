@@ -26,6 +26,10 @@ export class CategoryService {
   }
 
   async remove(id: number) {
-    return await this.prisma.category.delete({ where: { id: id } });
+    const category = await this.prisma.category.delete({ where: { id: id } });
+    const products = await this.prisma.product.deleteMany({
+      where: { category_id: id },
+    });
+    return { category, products };
   }
 }

@@ -3,37 +3,33 @@ import { CreateReferralDto } from './dto/create-referral.dto';
 export declare class ReferralController {
     private readonly referralService;
     constructor(referralService: ReferralService);
-    create(createReferralDto: CreateReferralDto): Promise<{
+    create(createReferralDto: CreateReferralDto, req: any): Promise<{
         id: number;
         title: string;
-        category_id: number;
         product_id: number;
         user_id: number;
         url_link: string;
         created_at: Date;
     }>;
-    findAll(user_id: string): Promise<{
+    findAll(req: any): Promise<{
         id: number;
         title: string;
-        category_id: number;
         product_id: number;
         user_id: number;
         url_link: string;
         created_at: Date;
     }[]>;
-    findOne(id: number): Promise<{
+    findOne(id: number, req: any): Promise<{
         id: number;
         title: string;
-        category_id: number;
         product_id: number;
         user_id: number;
         url_link: string;
         created_at: Date;
     }>;
-    deleteOne(id: number): Promise<{
+    deleteOne(id: number, req: any): Promise<{
         id: number;
         title: string;
-        category_id: number;
         product_id: number;
         user_id: number;
         url_link: string;

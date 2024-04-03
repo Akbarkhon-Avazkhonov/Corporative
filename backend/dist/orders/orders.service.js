@@ -25,6 +25,17 @@ let OrdersService = class OrdersService {
     findOne(id) {
         return `This action returns a #${id} order`;
     }
+    updateOrderStatus(updateOrderDto) {
+        if (updateOrderDto.order_id) {
+            return this.prisma.orders.update({
+                where: { id: updateOrderDto.order_id },
+                data: { status: updateOrderDto.status },
+            });
+        }
+        else {
+            throw new common_1.UnauthorizedException();
+        }
+    }
     update(id, updateOrderDto) {
         return `This action updates a #${id} order`;
     }

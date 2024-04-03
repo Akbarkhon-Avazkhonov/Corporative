@@ -25,7 +25,6 @@ model User {
 model Link {
   id          Int      @id @default(autoincrement())
   title       String   @default("Untitled")
-  category_id Int
   product_id  Int
   user_id     Int
   url_link    String

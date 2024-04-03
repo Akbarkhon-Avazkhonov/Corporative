@@ -27,6 +27,9 @@ let AdminGuard = class AdminGuard {
                 secret: process.env.JWT_SECRET,
             });
             request['admin'] = payload;
+            if (payload.name !== 'admin') {
+                throw new common_1.UnauthorizedException();
+            }
         }
         catch {
             throw new common_1.UnauthorizedException();

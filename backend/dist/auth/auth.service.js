@@ -61,7 +61,13 @@ let AuthService = class AuthService {
         if (!user) {
             throw new common_1.HttpException('User not found', common_1.HttpStatus.NOT_FOUND);
         }
-        return { user_id: user.id, email: email, balance: user.balance };
+        return {
+            id: user.id,
+            fullname: user.fullname,
+            phone_number: user.phone_number,
+            email: email,
+            balance: user.balance,
+        };
     }
     async sendPhoneCode(number) {
         const code = await this.getRandomSixDigitNumber();

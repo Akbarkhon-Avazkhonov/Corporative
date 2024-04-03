@@ -14,7 +14,9 @@ export declare class AuthService {
         user_id: number;
     }>;
     getProfile(email: string): Promise<{
-        user_id: number;
+        id: number;
+        fullname: string;
+        phone_number: string;
         email: string;
         balance: number;
     }>;

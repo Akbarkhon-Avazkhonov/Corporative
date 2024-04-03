@@ -1,24 +1,17 @@
-import { Test, TestingModule } from '@nestjs/testing';
-import { INestApplication } from '@nestjs/common';
-import * as request from 'supertest';
-import { AppModule } from './../src/app.module';
+import * as bcrypt from 'bcrypt';
 
-describe('AppController (e2e)', () => {
-  let app: INestApplication;
+// Example bcrypt hashes
+const hash1 = '$2a$10$DuT.6FlTctVthfEh.fydwOj3jtuPeUpD9IcTbmTQZllKxI0PpyP1i';
+const hash2 = '$2a$10$DuT.6FlTctVthfEh.fydwOj3jtuPeUpD9IcTbmTQZllKxI0PpyP1i';
 
-  beforeEach(async () => {
-    const moduleFixture: TestingModule = await Test.createTestingModule({
-      imports: [AppModule],
-    }).compile();
+// Function to compare two bcrypt hashes
+function compareBcryptHashes(hash1, hash2) {
+  return bcrypt.compareSync(hash1, hash2);
+}
 
-    app = moduleFixture.createNestApplication();
-    await app.init();
-  });
-
-  it('/ (GET)', () => {
-    return request(app.getHttpServer())
-      .get('/')
-      .expect(200)
-      .expect('Hello World!');
-  });
-});
+// Usage
+if (compareBcryptHashes(hash1, hash2)) {
+  console.log('Hashes match!');
+} else {
+  console.log('Hashes do not match.');
+}

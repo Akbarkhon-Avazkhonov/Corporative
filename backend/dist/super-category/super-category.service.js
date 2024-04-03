@@ -59,11 +59,39 @@ let SuperCategoryService = class SuperCategoryService {
         });
     }
     async remove(id) {
-        return await this.prisma.superCategory.delete({
+        const categories_id = await this.prisma.category.findMany({
+            where: {
+                super_category_id: id,
+            },
+            select: {
+                id: true,
+            },
+        });
+        const categoriesId = categories_id.map((category) => category.id);
+        const superCategory = await this.prisma.superCategory.delete({
             where: {
                 id: id,
             },
         });
+        const categories = await this.prisma.category.deleteMany({
+            where: {
+                id: {
+                    in: categoriesId,
+                },
+            },
+        });
+        const products = await this.prisma.product.deleteMany({
+            where: {
+                category_id: {
+                    in: categoriesId,
+                },
+            },
+        });
+        return {
+            superCategory,
+            categories,
+            products,
+        };
     }
 };
 exports.SuperCategoryService = SuperCategoryService;

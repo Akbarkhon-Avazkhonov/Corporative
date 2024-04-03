@@ -5,7 +5,6 @@ import {
   Post,
   UseGuards,
   Request,
-  Headers,
 } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import {
@@ -84,7 +83,6 @@ export class AuthController {
     return this.authService.verifyPhoneCode(body.phone_number, body.code);
   }
 
-
   @ApiOperation({
     description: 'JWT token validation endpoint',
   })
@@ -107,7 +105,7 @@ export class AuthController {
   @UseGuards(AuthGuard)
   @ApiBearerAuth()
   @Get('profile')
-  async getProfile(@Headers() headers: any, @Request() req) {
-    return this.authService.getProfile(req.email.email);
+  async getProfile(@Request() req) {
+    return this.authService.getProfile(req.email);
   }
 }
