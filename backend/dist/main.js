@@ -6,9 +6,8 @@ const app_module_1 = require("./app.module");
 async function bootstrap() {
     const app = await core_1.NestFactory.create(app_module_1.AppModule);
     const config = new swagger_1.DocumentBuilder()
-        .setTitle('Corporative API')
+        .setTitle('Admin, Referral and Corporative API')
         .setVersion('0.0.1')
-        .addTag('Corporative')
         .addBearerAuth({
         description: 'Default JWT Authorization',
         type: 'http',

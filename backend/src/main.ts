@@ -6,9 +6,8 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
   const config = new DocumentBuilder()
-    .setTitle('Corporative API')
+    .setTitle('Admin, Referral and Corporative API')
     .setVersion('0.0.1')
-    .addTag('Corporative')
     .addBearerAuth({
       description: 'Default JWT Authorization',
       type: 'http',
