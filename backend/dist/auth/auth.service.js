@@ -71,7 +71,7 @@ let AuthService = class AuthService {
     }
     async sendPhoneCode(number) {
         const code = await this.getRandomSixDigitNumber();
-        const message = `Ваш код подтверждения: ${code}`;
+        const message = `Euphoria регистрация Ваш код / Sizning kodingiz - ${code}`;
         await this.prisma.phoneCode.upsert({
             where: { phone: number },
             update: { code: code },
