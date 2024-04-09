@@ -27,4 +27,6 @@ export declare class AdminController {
         thisMonth: any[];
         lastMonth: any[];
     }>;
+    getEcoinRate(): Promise<number>;
+    changeEcoinRate(body: any): Promise<number>;
 }

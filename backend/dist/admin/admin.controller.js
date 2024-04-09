@@ -42,6 +42,12 @@ let AdminController = class AdminController {
     getNewUsers() {
         return this.adminService.getNewUsers();
     }
+    getEcoinRate() {
+        return this.adminService.getRate();
+    }
+    changeEcoinRate(body) {
+        return this.adminService.changeRate(body.rate);
+    }
 };
 exports.AdminController = AdminController;
 __decorate([
@@ -129,6 +135,36 @@ __decorate([
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", void 0)
 ], AdminController.prototype, "getNewUsers", null);
+__decorate([
+    (0, swagger_1.ApiOperation)({
+        description: 'Get e-coin rate',
+    }),
+    (0, common_1.Get)('/rate'),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", void 0)
+], AdminController.prototype, "getEcoinRate", null);
+__decorate([
+    (0, swagger_1.ApiOperation)({
+        description: 'Change e-coin rate',
+    }),
+    (0, swagger_1.ApiBody)({
+        description: 'Change e-coin rate',
+        schema: {
+            type: 'object',
+            properties: {
+                rate: { type: 'number' },
+            },
+        },
+    }),
+    (0, common_1.UseGuards)(admin_guad_1.AdminGuard),
+    (0, swagger_1.ApiBearerAuth)(),
+    (0, common_1.Post)('/rate'),
+    __param(0, (0, common_1.Body)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object]),
+    __metadata("design:returntype", void 0)
+], AdminController.prototype, "changeEcoinRate", null);
 exports.AdminController = AdminController = __decorate([
     (0, swagger_1.ApiTags)('Admin'),
     (0, common_1.Controller)('admin'),

@@ -83,4 +83,31 @@ export class AdminController {
   getNewUsers() {
     return this.adminService.getNewUsers();
   }
+
+  @ApiOperation({
+    description: 'Get e-coin rate',
+  })
+  @Get('/rate')
+  getEcoinRate() {
+    return this.adminService.getRate();
+  }
+
+  @ApiOperation({
+    description: 'Change e-coin rate',
+  })
+  @ApiBody({
+    description: 'Change e-coin rate',
+    schema: {
+      type: 'object',
+      properties: {
+        rate: { type: 'number' },
+      },
+    },
+  })
+ @UseGuards(AdminGuard)
+  @ApiBearerAuth()
+  @Post('/rate')
+  changeEcoinRate(@Body() body) {
+    return this.adminService.changeRate(body.rate);
+  }
 }

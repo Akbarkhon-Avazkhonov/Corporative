@@ -36,4 +36,5 @@ export class ReferralService {
     }
     return await this.prisma.link.delete({ where: { id: id } });
   }
+
 }
