@@ -159,4 +159,34 @@ export class AdminService {
 
     return { thisMonth, lastMonth };
   }
+
+  async getRate() {
+    const answer =  await this.prisma.rate.findFirst();
+    if (answer) {
+      return answer.rate;
+    }
+    return 0;
+  }
+
+  async changeRate(rate: number) {
+    if (rate < 0) {
+      throw new HttpException('Rate must be positive', HttpStatus.BAD_REQUEST);
+    }
+    try {
+      try {
+        const answer =  await this.prisma.rate.update({
+          where: { id: 1 },
+          data: { rate: rate },
+        });
+        return answer.rate;
+      } catch {
+        const answer = await this.prisma.rate.create({
+          data: { rate: rate },
+        });
+        return answer.rate;
+      }
+    } catch (e) {
+      throw new HttpException(e.message, HttpStatus.BAD_REQUEST);
+    }
+  }
 }

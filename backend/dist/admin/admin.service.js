@@ -130,6 +130,36 @@ let AdminService = class AdminService {
         lastMonth.reverse();
         return { thisMonth, lastMonth };
     }
+    async getRate() {
+        const answer = await this.prisma.rate.findFirst();
+        if (answer) {
+            return answer.rate;
+        }
+        return 0;
+    }
+    async changeRate(rate) {
+        if (rate < 0) {
+            throw new common_1.HttpException('Rate must be positive', common_1.HttpStatus.BAD_REQUEST);
+        }
+        try {
+            try {
+                const answer = await this.prisma.rate.update({
+                    where: { id: 1 },
+                    data: { rate: rate },
+                });
+                return answer.rate;
+            }
+            catch {
+                const answer = await this.prisma.rate.create({
+                    data: { rate: rate },
+                });
+                return answer.rate;
+            }
+        }
+        catch (e) {
+            throw new common_1.HttpException(e.message, common_1.HttpStatus.BAD_REQUEST);
+        }
+    }
 };
 exports.AdminService = AdminService;
 exports.AdminService = AdminService = __decorate([

@@ -29,4 +29,6 @@ export declare class AdminService {
         thisMonth: any[];
         lastMonth: any[];
     }>;
+    getRate(): Promise<number>;
+    changeRate(rate: number): Promise<number>;
 }
