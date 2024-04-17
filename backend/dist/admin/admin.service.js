@@ -68,7 +68,11 @@ let AdminService = class AdminService {
                 where: { user_id: users[i].id },
             });
         }
-        return users;
+        const count = await this.prisma.user.count();
+        return {
+            users: users,
+            count: count,
+        };
     }
     async getProducts(page) {
         const products = await this.prisma.product.findMany({
@@ -93,7 +97,11 @@ let AdminService = class AdminService {
                 where: { product_id: products[i].id, status: 'PAID' },
             });
         }
-        return products;
+        const count = await this.prisma.product.count();
+        return {
+            products: products,
+            count: count,
+        };
     }
     async getNewUsers() {
         const thisMonth = [];

@@ -21,8 +21,14 @@ export declare class AdminController {
         referral_link: string;
         created_at: Date;
     }[]>;
-    getUsers(page: number): Promise<any>;
-    getProducts(page: number): Promise<any>;
+    getUsers(page: number): Promise<{
+        users: any;
+        count: number;
+    }>;
+    getProducts(page: number): Promise<{
+        products: any;
+        count: number;
+    }>;
     getNewUsers(): Promise<{
         thisMonth: any[];
         lastMonth: any[];

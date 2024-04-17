@@ -104,7 +104,7 @@ export class AdminController {
       },
     },
   })
- @UseGuards(AdminGuard)
+  @UseGuards(AdminGuard)
   @ApiBearerAuth()
   @Post('/rate')
   changeEcoinRate(@Body() body) {

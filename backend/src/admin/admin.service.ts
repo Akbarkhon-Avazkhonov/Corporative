@@ -65,7 +65,11 @@ export class AdminService {
         where: { user_id: users[i].id },
       });
     }
-    return users;
+    const count = await this.prisma.user.count();
+    return {
+      users: users,
+      count: count,
+    };
   }
 
   async getProducts(page: number) {
@@ -96,7 +100,11 @@ export class AdminService {
         where: { product_id: products[i].id, status: 'PAID' },
       });
     }
-    return products;
+    const count = await this.prisma.product.count();
+    return {
+      products: products,
+      count: count,
+    };
   }
 
   async getNewUsers() {
@@ -161,7 +169,7 @@ export class AdminService {
   }
 
   async getRate() {
-    const answer =  await this.prisma.rate.findFirst();
+    const answer = await this.prisma.rate.findFirst();
     if (answer) {
       return answer.rate;
     }
@@ -174,7 +182,7 @@ export class AdminService {
     }
     try {
       try {
-        const answer =  await this.prisma.rate.update({
+        const answer = await this.prisma.rate.update({
           where: { id: 1 },
           data: { rate: rate },
         });
