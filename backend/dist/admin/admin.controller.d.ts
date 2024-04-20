@@ -8,19 +8,7 @@ export declare class AdminController {
     }>;
     getReferralCount(): Promise<number>;
     getBalance(): Promise<number>;
-    getTopReferrals(): Promise<{
-        id: number;
-        fullname: string;
-        email: string;
-        phone_number: string;
-        password: string;
-        gender: string;
-        age: number;
-        city: string;
-        balance: number;
-        referral_link: string;
-        created_at: Date;
-    }[]>;
+    getTopReferrals(): Promise<any>;
     getUsers(page: number): Promise<{
         users: any;
         count: number;

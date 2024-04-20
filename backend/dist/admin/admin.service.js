@@ -42,10 +42,16 @@ let AdminService = class AdminService {
         return sum._sum.balance;
     }
     async getTopReferrals() {
-        return await this.prisma.user.findMany({
+        const users = await this.prisma.user.findMany({
             take: 10,
             orderBy: { balance: 'desc' },
         });
+        for (let i = 0; i < users.length; i++) {
+            users[i].total_links = await this.prisma.link.count({
+                where: { user_id: users[i].id },
+            });
+        }
+        return users;
     }
     async getUsers(page) {
         const users = await this.prisma.user.findMany({
@@ -112,8 +118,8 @@ let AdminService = class AdminService {
                 count: await this.prisma.user.count({
                     where: {
                         created_at: {
-                            gte: new Date(new Date().getTime() - i * 24 * 60 * 60 * 1000),
-                            lt: new Date(new Date().getTime() - (i - 1) * 24 * 60 * 60 * 1000),
+                            gte: new Date(new Date().getTime() - (i + 1) * 24 * 60 * 60 * 1000),
+                            lt: new Date(new Date().getTime() - i * 24 * 60 * 60 * 1000),
                         },
                     },
                 }),
@@ -127,8 +133,8 @@ let AdminService = class AdminService {
                 count: await this.prisma.user.count({
                     where: {
                         created_at: {
-                            gte: new Date(new Date().getFullYear(), new Date().getMonth() - 1, numberOfDaysLastMonth - i),
-                            lt: new Date(new Date().getFullYear(), new Date().getMonth() - 1, numberOfDaysLastMonth - i - 1),
+                            gte: new Date(new Date().getFullYear(), new Date().getMonth() - 1, numberOfDaysLastMonth - i + 1),
+                            lt: new Date(new Date().getFullYear(), new Date().getMonth() - 1, numberOfDaysLastMonth - i),
                         },
                     },
                 }),

@@ -37,10 +37,16 @@ export class AdminService {
 
   async getTopReferrals() {
     // Get the top 10 user with the highest balance
-    return await this.prisma.user.findMany({
+    const users: any = await this.prisma.user.findMany({
       take: 10,
       orderBy: { balance: 'desc' },
     });
+    for (let i = 0; i < users.length; i++) {
+      users[i].total_links = await this.prisma.link.count({
+        where: { user_id: users[i].id },
+      });
+    }
+    return users;
   }
 
   async getUsers(page: number) {
@@ -119,10 +125,10 @@ export class AdminService {
         count: await this.prisma.user.count({
           where: {
             created_at: {
-              gte: new Date(new Date().getTime() - i * 24 * 60 * 60 * 1000),
-              lt: new Date(
-                new Date().getTime() - (i - 1) * 24 * 60 * 60 * 1000,
+              gte: new Date(
+                new Date().getTime() - (i + 1) * 24 * 60 * 60 * 1000,
               ),
+              lt: new Date(new Date().getTime() - i * 24 * 60 * 60 * 1000),
             },
           },
         }),
@@ -149,12 +155,12 @@ export class AdminService {
               gte: new Date(
                 new Date().getFullYear(),
                 new Date().getMonth() - 1,
-                numberOfDaysLastMonth - i,
+                numberOfDaysLastMonth - i + 1,
               ),
               lt: new Date(
                 new Date().getFullYear(),
                 new Date().getMonth() - 1,
-                numberOfDaysLastMonth - i - 1,
+                numberOfDaysLastMonth - i,
               ),
             },
           },
