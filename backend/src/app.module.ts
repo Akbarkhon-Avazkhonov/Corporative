@@ -12,6 +12,7 @@ import { ServeStaticModule } from '@nestjs/serve-static';
 import { join } from 'path';
 import { AdminModule } from './admin/admin.module';
 import { GuidesModule } from './guides/guides.module';
+import { BidModule } from './bid/bid.module';
 @Module({
   imports: [
     AuthModule,
@@ -26,6 +27,7 @@ import { GuidesModule } from './guides/guides.module';
     }),
     AdminModule,
     GuidesModule,
+    BidModule,
   ],
   controllers: [AppController],
   providers: [AppService],

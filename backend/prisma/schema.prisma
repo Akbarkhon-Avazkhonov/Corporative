@@ -23,13 +23,13 @@ model User {
 }
 
 model Link {
-  id          Int      @id @default(autoincrement())
-  title       String   @default("Untitled")
-  product_id  Int
-  user_id     Int
-  url_link    String
-  created_at  DateTime @default(now())
-  User        User     @relation(fields: [user_id], references: [id])
+  id         Int      @id @default(autoincrement())
+  title      String   @default("Untitled")
+  product_id Int
+  user_id    Int
+  url_link   String
+  created_at DateTime @default(now())
+  User       User     @relation(fields: [user_id], references: [id])
 }
 
 model SuperCategory {
@@ -66,24 +66,33 @@ model Orders {
   phone       String
   city        String
   product_id  Int
-  count       Int 
-  status      String  @default("NEW")
-  referral_id Int    @default(0) // user of user who created referral link
-  link_id     Int   @default(0)
+  count       Int
+  status      String   @default("NEW")
+  referral_id Int      @default(0) // user of user who created referral link
+  link_id     Int      @default(0)
   created_at  DateTime @default(now())
 }
 
 model PhoneCode {
-  id          Int      @id @default(autoincrement())
-  phone       String   @unique
-  code        Int
-  created_at  DateTime @default(now())
+  id         Int      @id @default(autoincrement())
+  phone      String   @unique
+  code       Int
+  created_at DateTime @default(now())
+}
+
+model Bid {
+  id         Int      @id @default(autoincrement())
+  name       String
+  surname    String
+  phone      String
+  message    String
+  created_at DateTime @default(now())
 }
 
 model SmsToken {
-  id          Int      @id @default(autoincrement())
-  token       String
-  created_at  DateTime @default(now())
+  id         Int      @id @default(autoincrement())
+  token      String
+  created_at DateTime @default(now())
 }
 
 model Guide {
@@ -95,6 +104,6 @@ model Guide {
 }
 
 model Rate {
-  id          Int      @id @default(autoincrement())
-  rate        Int
+  id   Int @id @default(autoincrement())
+  rate Int
 }
