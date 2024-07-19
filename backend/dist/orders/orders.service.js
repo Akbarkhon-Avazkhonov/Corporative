@@ -28,7 +28,7 @@ let OrdersService = class OrdersService {
     updateOrderStatus(updateOrderDto) {
         if (updateOrderDto.order_id) {
             return this.prisma.orders.update({
-                where: { id: updateOrderDto.order_id },
+                where: { id: +updateOrderDto.order_id },
                 data: { status: updateOrderDto.status },
             });
         }

@@ -22,13 +22,12 @@ export class OrdersService {
   updateOrderStatus(updateOrderDto: { order_id: number; status: string }) {
     if (updateOrderDto.order_id) {
       return this.prisma.orders.update({
-        where: { id: updateOrderDto.order_id },
+        where: { id: +updateOrderDto.order_id },
         data: { status: updateOrderDto.status },
       });
     } else {
       throw new UnauthorizedException();
     }
-
   }
   update(id: number, updateOrderDto: UpdateOrderDto) {
     return `This action updates a #${id} order`;
