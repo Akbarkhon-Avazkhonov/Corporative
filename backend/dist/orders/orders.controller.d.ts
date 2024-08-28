@@ -1,10 +1,10 @@
 import { OrdersService } from './orders.service';
 import { CreateOrderDto } from './dto/create-order.dto';
-import { UpdateOrderDto } from './dto/update-order.dto';
+import { OrderStatus } from '@prisma/client';
 export declare class OrdersController {
     private readonly ordersService;
     constructor(ordersService: OrdersService);
-    create(createOrderDto: CreateOrderDto): import(".prisma/client").Prisma.Prisma__OrdersClient<{
+    create(createOrderDto: CreateOrderDto): Promise<{
         id: number;
         name: string;
         surname: string;
@@ -12,17 +12,89 @@ export declare class OrdersController {
         city: string;
         product_id: number;
         count: number;
-        status: string;
-        referral_id: number;
+        status: import(".prisma/client").$Enums.OrderStatus;
         link_id: number;
+        user_id: number;
         created_at: Date;
-    }, never, import("@prisma/client/runtime/library").DefaultArgs>;
-    findAll(): string;
+    }>;
+    findAll(): Promise<({
+        Product: {
+            id: number;
+            title: string;
+            compound: string;
+            category_id: number;
+            action: string;
+            price: number;
+            description: string;
+            count: number;
+            testimony: string;
+            contraction: string;
+            image: import(".prisma/client").Prisma.JsonValue;
+            color: number;
+            extra: import(".prisma/client").Prisma.JsonValue;
+        };
+    } & {
+        id: number;
+        name: string;
+        surname: string;
+        phone: string;
+        city: string;
+        product_id: number;
+        count: number;
+        status: import(".prisma/client").$Enums.OrderStatus;
+        link_id: number;
+        user_id: number;
+        created_at: Date;
+    })[]>;
+    findReferralOrders(req: any): Promise<({
+        Link: {
+            id: number;
+            title: string;
+            product_id: number;
+            user_id: number;
+            url_link: string;
+            created_at: Date;
+        };
+    } & {
+        id: number;
+        name: string;
+        surname: string;
+        phone: string;
+        city: string;
+        product_id: number;
+        count: number;
+        status: import(".prisma/client").$Enums.OrderStatus;
+        link_id: number;
+        user_id: number;
+        created_at: Date;
+    })[]>;
+    findReferralOrdersPaginated(skip: string, take: string, req: any): Promise<({
+        Link: {
+            id: number;
+            title: string;
+            product_id: number;
+            user_id: number;
+            url_link: string;
+            created_at: Date;
+        };
+    } & {
+        id: number;
+        name: string;
+        surname: string;
+        phone: string;
+        city: string;
+        product_id: number;
+        count: number;
+        status: import(".prisma/client").$Enums.OrderStatus;
+        link_id: number;
+        user_id: number;
+        created_at: Date;
+    })[]>;
     findOne(id: string): string;
     updateOrderStatus(updateOrderDto: {
         order_id: number;
-        status: string;
-    }): import(".prisma/client").Prisma.Prisma__OrdersClient<{
+        status: OrderStatus;
+    }): Promise<{
         id: number;
         name: string;
         surname: string;
@@ -30,11 +102,10 @@ export declare class OrdersController {
         city: string;
         product_id: number;
         count: number;
-        status: string;
-        referral_id: number;
+        status: import(".prisma/client").$Enums.OrderStatus;
         link_id: number;
+        user_id: number;
         created_at: Date;
-    }, never, import("@prisma/client/runtime/library").DefaultArgs>;
-    update(id: string, updateOrderDto: UpdateOrderDto): string;
+    }>;
     remove(id: string): string;
 }

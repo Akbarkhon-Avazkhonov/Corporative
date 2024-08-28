@@ -12,6 +12,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.AdminService = void 0;
 const common_1 = require("@nestjs/common");
 const jwt_1 = require("@nestjs/jwt");
+const client_1 = require("@prisma/client");
 const bcrypt = require("bcrypt");
 const prisma_service_1 = require("../prisma.service");
 let AdminService = class AdminService {
@@ -100,7 +101,7 @@ let AdminService = class AdminService {
                 where: { product_id: products[i].id },
             });
             products[i].total_paid_orders = await this.prisma.orders.count({
-                where: { product_id: products[i].id, status: 'PAID' },
+                where: { product_id: products[i].id, status: client_1.OrderStatus.DONE },
             });
         }
         const count = await this.prisma.product.count();

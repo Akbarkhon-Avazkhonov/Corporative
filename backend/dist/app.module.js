@@ -20,6 +20,8 @@ const serve_static_1 = require("@nestjs/serve-static");
 const path_1 = require("path");
 const admin_module_1 = require("./admin/admin.module");
 const guides_module_1 = require("./guides/guides.module");
+const bid_module_1 = require("./bid/bid.module");
+const profile_module_1 = require("./profile/profile.module");
 let AppModule = class AppModule {
 };
 exports.AppModule = AppModule;
@@ -38,6 +40,8 @@ exports.AppModule = AppModule = __decorate([
             }),
             admin_module_1.AdminModule,
             guides_module_1.GuidesModule,
+            bid_module_1.BidModule,
+            profile_module_1.ProfileModule,
         ],
         controllers: [app_controller_1.AppController],
         providers: [app_service_1.AppService],

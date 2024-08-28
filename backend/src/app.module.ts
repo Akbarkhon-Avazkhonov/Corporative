@@ -13,6 +13,7 @@ import { join } from 'path';
 import { AdminModule } from './admin/admin.module';
 import { GuidesModule } from './guides/guides.module';
 import { BidModule } from './bid/bid.module';
+import { ProfileModule } from './profile/profile.module';
 @Module({
   imports: [
     AuthModule,
@@ -28,6 +29,7 @@ import { BidModule } from './bid/bid.module';
     AdminModule,
     GuidesModule,
     BidModule,
+    ProfileModule,
   ],
   controllers: [AppController],
   providers: [AppService],

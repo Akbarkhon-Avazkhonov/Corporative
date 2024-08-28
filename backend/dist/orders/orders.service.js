@@ -12,20 +12,58 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.OrdersService = void 0;
 const common_1 = require("@nestjs/common");
 const prisma_service_1 = require("../prisma.service");
+const client_1 = require("@prisma/client");
 let OrdersService = class OrdersService {
     constructor(prisma) {
         this.prisma = prisma;
     }
-    create(createOrderDto) {
-        return this.prisma.orders.create({ data: createOrderDto });
+    async create(createOrderDto) {
+        if (createOrderDto.link_id) {
+            const link = await this.prisma.link.findUnique({
+                where: { id: createOrderDto.link_id },
+                select: { user_id: true },
+            });
+            createOrderDto.user_id = link.user_id;
+        }
+        return await this.prisma.orders.create({ data: createOrderDto });
     }
-    findAll() {
-        return `This action returns all orders`;
+    async findAll() {
+        return await this.prisma.orders.findMany({
+            include: { Product: true },
+            orderBy: { created_at: 'desc' },
+        });
+    }
+    async findReferralOrders(id) {
+        return await this.prisma.orders.findMany({
+            where: { user_id: id },
+            include: { Link: true },
+            orderBy: { created_at: 'desc' },
+        });
+    }
+    async findReferralOrdersPaginated(id, skip, take) {
+        return await this.prisma.orders.findMany({
+            where: { user_id: id },
+            include: { Link: true },
+            skip,
+            take,
+        });
     }
     findOne(id) {
         return `This action returns a #${id} order`;
     }
-    updateOrderStatus(updateOrderDto) {
+    async updateOrderStatus(updateOrderDto) {
+        if (updateOrderDto.status === client_1.OrderStatus.DONE) {
+            const user = await this.prisma.orders.findUnique({
+                where: { id: updateOrderDto.order_id },
+                select: { user_id: true },
+            });
+            if (user) {
+                await this.prisma.user.update({
+                    where: { id: user.user_id },
+                    data: { balance: { increment: 1 } },
+                });
+            }
+        }
         if (updateOrderDto.order_id) {
             return this.prisma.orders.update({
                 where: { id: +updateOrderDto.order_id },
@@ -36,7 +74,7 @@ let OrdersService = class OrdersService {
             throw new common_1.UnauthorizedException();
         }
     }
-    update(id, updateOrderDto) {
+    update(id) {
         return `This action updates a #${id} order`;
     }
     remove(id) {

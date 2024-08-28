@@ -8,6 +8,9 @@ async function bootstrap() {
   const config = new DocumentBuilder()
     .setTitle('Admin, Referral and Corporative API')
     .setVersion('0.0.1')
+    .addServer('/api')
+    .addServer('/')
+
     .addBearerAuth({
       description: 'Default JWT Authorization',
       type: 'http',

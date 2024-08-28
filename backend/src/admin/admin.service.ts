@@ -1,5 +1,6 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
+import { OrderStatus } from '@prisma/client';
 import * as bcrypt from 'bcrypt';
 import { PrismaService } from 'src/prisma.service';
 
@@ -103,7 +104,7 @@ export class AdminService {
       });
       //add to all products the total number of their paid orders
       products[i].total_paid_orders = await this.prisma.orders.count({
-        where: { product_id: products[i].id, status: 'PAID' },
+        where: { product_id: products[i].id, status: OrderStatus.DONE },
       });
     }
     const count = await this.prisma.product.count();

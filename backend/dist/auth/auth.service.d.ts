@@ -14,11 +14,19 @@ export declare class AuthService {
         user_id: number;
     }>;
     getProfile(email: string): Promise<{
-        id: number;
-        fullname: string;
-        phone_number: string;
+        id: any;
+        fullname: any;
+        phone_number: any;
         email: string;
-        balance: number;
+        balance: any;
+        isVerified: any;
+        Orders: any;
+        total_orders: any;
+        referral_links: any;
+        DONE: number;
+        IN_PROGRESS: number;
+        REJECTED: number;
+        TRASH: number;
     }>;
     sendPhoneCode(number: string): Promise<boolean>;
     verifyPhoneCode(number: string, code: number): Promise<boolean>;

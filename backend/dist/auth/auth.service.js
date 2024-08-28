@@ -57,6 +57,36 @@ let AuthService = class AuthService {
     async getProfile(email) {
         const user = await this.prisma.user.findUnique({
             where: { email: email },
+            include: {
+                Orders: {
+                    take: 15,
+                    orderBy: { created_at: 'desc' },
+                },
+                _count: {
+                    select: { Links: true, Orders: true },
+                },
+            },
+        });
+        const DONE = await this.prisma.orders.count({
+            where: { user_id: user.id, status: 'DONE' },
+        });
+        const IN_PROGRESS = await this.prisma.orders.count({
+            where: {
+                user_id: user.id,
+                OR: [{ status: 'NEW' }, { status: 'IN_PROGRESS' }],
+            },
+        });
+        const REJECTED = await this.prisma.orders.count({
+            where: {
+                user_id: user.id,
+                OR: [{ status: 'REJECTED' }],
+            },
+        });
+        const TRASH = await this.prisma.orders.count({
+            where: {
+                user_id: user.id,
+                OR: [{ status: 'TRASH' }],
+            },
         });
         if (!user) {
             throw new common_1.HttpException('User not found', common_1.HttpStatus.NOT_FOUND);
@@ -67,18 +97,32 @@ let AuthService = class AuthService {
             phone_number: user.phone_number,
             email: email,
             balance: user.balance,
+            isVerified: user.isVerified,
+            Orders: user.Orders,
+            total_orders: user._count.Orders,
+            referral_links: user._count.Links,
+            DONE: DONE,
+            IN_PROGRESS: IN_PROGRESS,
+            REJECTED: REJECTED,
+            TRASH: TRASH,
         };
     }
     async sendPhoneCode(number) {
-        const code = await this.getRandomSixDigitNumber();
-        const message = `Euphoria регистрация Ваш код / Sizning kodingiz - ${code}`;
-        await this.prisma.phoneCode.upsert({
-            where: { phone: number },
-            update: { code: code },
-            create: { phone: number, code: code },
-        });
-        await this.sendSMS(number, message);
-        return true;
+        try {
+            const code = await this.getRandomSixDigitNumber();
+            const message = `Euphoria регистрация Ваш код / Sizning kodingiz - ${code}`;
+            await this.prisma.phoneCode.upsert({
+                where: { phone: number },
+                update: { code: code },
+                create: { phone: number, code: code },
+            });
+            await this.sendSMS(number, message);
+            return true;
+        }
+        catch (e) {
+            throw new common_1.HttpException(e.message, common_1.HttpStatus.BAD_REQUEST);
+            console.log(e);
+        }
     }
     async verifyPhoneCode(number, code) {
         const phoneCode = await this.prisma.phoneCode.findUnique({

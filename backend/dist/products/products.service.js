@@ -46,7 +46,7 @@ let ProductsService = class ProductsService {
             const filename = `${Date.now()}-${file.originalname}`;
             const filePath = uploadDir + `/` + filename;
             await fs_1.promises.writeFile(filePath, file.buffer);
-            const fileUrl = `http://localhost:3002/${filePath}`;
+            const fileUrl = `${process.env.BACKEND_URL}/${filePath}`;
             return fileUrl;
         }
         catch (error) {

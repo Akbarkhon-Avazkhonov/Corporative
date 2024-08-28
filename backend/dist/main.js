@@ -8,6 +8,8 @@ async function bootstrap() {
     const config = new swagger_1.DocumentBuilder()
         .setTitle('Admin, Referral and Corporative API')
         .setVersion('0.0.1')
+        .addServer('/api')
+        .addServer('/')
         .addBearerAuth({
         description: 'Default JWT Authorization',
         type: 'http',
@@ -18,7 +20,7 @@ async function bootstrap() {
     const document = swagger_1.SwaggerModule.createDocument(app, config);
     swagger_1.SwaggerModule.setup('api', app, document);
     app.enableCors();
-    await app.listen(3002);
+    await app.listen(4000);
 }
 bootstrap();
 //# sourceMappingURL=main.js.map

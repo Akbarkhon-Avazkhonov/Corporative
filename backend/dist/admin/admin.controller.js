@@ -13,6 +13,7 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.AdminController = void 0;
+const openapi = require("@nestjs/swagger");
 const common_1 = require("@nestjs/common");
 const admin_service_1 = require("./admin.service");
 const admin_guad_1 = require("./admin.guad");
@@ -62,6 +63,7 @@ __decorate([
         },
     }),
     (0, common_1.Post)('/login'),
+    openapi.ApiResponse({ status: 201 }),
     __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object]),
@@ -74,6 +76,7 @@ __decorate([
     (0, common_1.UseGuards)(admin_guad_1.AdminGuard),
     (0, swagger_1.ApiBearerAuth)(),
     (0, common_1.Get)('/referral/count'),
+    openapi.ApiResponse({ status: 200, type: Number }),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", void 0)
@@ -85,6 +88,7 @@ __decorate([
     (0, common_1.UseGuards)(admin_guad_1.AdminGuard),
     (0, swagger_1.ApiBearerAuth)(),
     (0, common_1.Get)('/balance'),
+    openapi.ApiResponse({ status: 200, type: Number }),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", void 0)
@@ -96,6 +100,7 @@ __decorate([
     (0, common_1.UseGuards)(admin_guad_1.AdminGuard),
     (0, swagger_1.ApiBearerAuth)(),
     (0, common_1.Get)('/top-referrals'),
+    openapi.ApiResponse({ status: 200, type: Object }),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", void 0)
@@ -107,6 +112,7 @@ __decorate([
     (0, common_1.UseGuards)(admin_guad_1.AdminGuard),
     (0, swagger_1.ApiBearerAuth)(),
     (0, common_1.Get)('/users/:page'),
+    openapi.ApiResponse({ status: 200 }),
     __param(0, (0, common_1.Param)('page')),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Number]),
@@ -119,6 +125,7 @@ __decorate([
     (0, common_1.UseGuards)(admin_guad_1.AdminGuard),
     (0, swagger_1.ApiBearerAuth)(),
     (0, common_1.Get)('/products/:page'),
+    openapi.ApiResponse({ status: 200 }),
     __param(0, (0, common_1.Param)('page')),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Number]),
@@ -131,6 +138,7 @@ __decorate([
     (0, common_1.UseGuards)(admin_guad_1.AdminGuard),
     (0, swagger_1.ApiBearerAuth)(),
     (0, common_1.Get)('/new-users'),
+    openapi.ApiResponse({ status: 200 }),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", void 0)
@@ -140,6 +148,7 @@ __decorate([
         description: 'Get e-coin rate',
     }),
     (0, common_1.Get)('/rate'),
+    openapi.ApiResponse({ status: 200, type: Number }),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", void 0)
@@ -160,6 +169,7 @@ __decorate([
     (0, common_1.UseGuards)(admin_guad_1.AdminGuard),
     (0, swagger_1.ApiBearerAuth)(),
     (0, common_1.Post)('/rate'),
+    openapi.ApiResponse({ status: 201, type: Number }),
     __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object]),

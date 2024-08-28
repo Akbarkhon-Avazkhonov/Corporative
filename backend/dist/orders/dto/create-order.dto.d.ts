@@ -5,4 +5,6 @@ export declare class CreateOrderDto {
     city: string;
     product_id: number;
     count: number;
+    link_id?: number;
+    user_id?: number;
 }

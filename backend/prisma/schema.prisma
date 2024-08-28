@@ -7,6 +7,14 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+enum OrderStatus {
+  NEW
+  IN_PROGRESS
+  DONE
+  TRASH
+  REJECTED
+}
+
 model User {
   id            Int      @id @default(autoincrement())
   fullname      String?
@@ -14,12 +22,23 @@ model User {
   phone_number  String?  @unique
   password      String
   gender        String?
+  isVerified    Boolean  @default(false)
   age           Int?
   city          String?
   balance       Int      @default(0)
   referral_link String?  @unique
   created_at    DateTime @default(now())
-  links         Link[]
+  Links         Link[]
+  Orders        Orders[]
+  profile       Profile?
+}
+
+model Profile {
+  id      Int      @id @default(autoincrement())
+  user    User     @relation(fields: [user_id], references: [id])
+  user_id Int      @unique
+  info    Json     @default("{}")
+  images  String[]
 }
 
 model Link {
@@ -30,6 +49,7 @@ model Link {
   url_link   String
   created_at DateTime @default(now())
   User       User     @relation(fields: [user_id], references: [id])
+  Orders     Orders[]
 }
 
 model SuperCategory {
@@ -44,33 +64,37 @@ model Category {
 }
 
 model Product {
-  id          Int    @id @default(autoincrement())
-  title       String @default("")
-  compound    String @default("")
-  category_id Int    @default(1)
-  action      String @default("")
-  price       Int    @default(0)
-  description String @default("")
-  count       Int    @default(0)
-  testimony   String @default("")
-  contraction String @default("")
-  image       Json   @default("{}")
-  color       Int    @default(1)
-  extra       Json   @default("{}")
+  id          Int      @id @default(autoincrement())
+  title       String   @default("")
+  compound    String   @default("")
+  category_id Int      @default(1)
+  action      String   @default("")
+  price       Int      @default(0)
+  description String   @default("")
+  count       Int      @default(0)
+  testimony   String   @default("")
+  contraction String   @default("")
+  image       Json     @default("{}")
+  color       Int      @default(1)
+  extra       Json     @default("{}")
+  Orders      Orders[]
 }
 
 model Orders {
-  id          Int      @id @default(autoincrement())
-  name        String
-  surname     String
-  phone       String
-  city        String
-  product_id  Int
-  count       Int
-  status      String   @default("NEW")
-  referral_id Int      @default(0) // user of user who created referral link
-  link_id     Int      @default(0)
-  created_at  DateTime @default(now())
+  id         Int         @id @default(autoincrement())
+  name       String
+  surname    String
+  phone      String
+  city       String
+  product_id Int
+  Product    Product     @relation(fields: [product_id], references: [id])
+  count      Int
+  status     OrderStatus @default(NEW)
+  link_id    Int?
+  Link       Link?       @relation(fields: [link_id], references: [id])
+  user_id    Int?
+  User       User?       @relation(fields: [user_id], references: [id])
+  created_at DateTime    @default(now())
 }
 
 model PhoneCode {

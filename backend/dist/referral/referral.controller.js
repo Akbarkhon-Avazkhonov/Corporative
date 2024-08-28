@@ -13,6 +13,7 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ReferralController = void 0;
+const openapi = require("@nestjs/swagger");
 const common_1 = require("@nestjs/common");
 const referral_service_1 = require("./referral.service");
 const create_referral_dto_1 = require("./dto/create-referral.dto");
@@ -48,6 +49,7 @@ __decorate([
         },
     }),
     (0, common_1.Post)(),
+    openapi.ApiResponse({ status: 201 }),
     __param(0, (0, common_1.Body)()),
     __param(1, (0, common_1.Request)()),
     __metadata("design:type", Function),
@@ -56,6 +58,7 @@ __decorate([
 ], ReferralController.prototype, "create", null);
 __decorate([
     (0, common_1.Get)(''),
+    openapi.ApiResponse({ status: 200, type: [Object] }),
     __param(0, (0, common_1.Request)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object]),
@@ -63,6 +66,7 @@ __decorate([
 ], ReferralController.prototype, "findAll", null);
 __decorate([
     (0, common_1.Get)('id/:id'),
+    openapi.ApiResponse({ status: 200 }),
     __param(0, (0, common_1.Param)('id')),
     __param(1, (0, common_1.Request)()),
     __metadata("design:type", Function),
@@ -71,6 +75,7 @@ __decorate([
 ], ReferralController.prototype, "findOne", null);
 __decorate([
     (0, common_1.Delete)(':id'),
+    openapi.ApiResponse({ status: 200 }),
     __param(0, (0, common_1.Param)('id')),
     __param(1, (0, common_1.Request)()),
     __metadata("design:type", Function),

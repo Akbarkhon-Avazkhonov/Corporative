@@ -22,10 +22,18 @@ export declare class AuthController {
         user_id: number;
     }>;
     getProfile(req: any): Promise<{
-        id: number;
-        fullname: string;
-        phone_number: string;
+        id: any;
+        fullname: any;
+        phone_number: any;
         email: string;
-        balance: number;
+        balance: any;
+        isVerified: any;
+        Orders: any;
+        total_orders: any;
+        referral_links: any;
+        DONE: number;
+        IN_PROGRESS: number;
+        REJECTED: number;
+        TRASH: number;
     }>;
 }

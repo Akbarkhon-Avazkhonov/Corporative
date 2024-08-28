@@ -13,12 +13,13 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.OrdersController = void 0;
+const openapi = require("@nestjs/swagger");
 const common_1 = require("@nestjs/common");
 const orders_service_1 = require("./orders.service");
 const create_order_dto_1 = require("./dto/create-order.dto");
-const update_order_dto_1 = require("./dto/update-order.dto");
 const swagger_1 = require("@nestjs/swagger");
 const admin_guad_1 = require("../admin/admin.guad");
+const auth_guad_1 = require("../auth/auth.guad");
 let OrdersController = class OrdersController {
     constructor(ordersService) {
         this.ordersService = ordersService;
@@ -29,14 +30,19 @@ let OrdersController = class OrdersController {
     findAll() {
         return this.ordersService.findAll();
     }
+    findReferralOrders(req) {
+        const id = req.user_id;
+        return this.ordersService.findReferralOrders(+id);
+    }
+    findReferralOrdersPaginated(skip, take, req) {
+        const id = req.user_id;
+        return this.ordersService.findReferralOrdersPaginated(+id, +skip, +take);
+    }
     findOne(id) {
         return this.ordersService.findOne(+id);
     }
     updateOrderStatus(updateOrderDto) {
         return this.ordersService.updateOrderStatus(updateOrderDto);
-    }
-    update(id, updateOrderDto) {
-        return this.ordersService.update(+id, updateOrderDto);
     }
     remove(id) {
         return this.ordersService.remove(+id);
@@ -44,20 +50,8 @@ let OrdersController = class OrdersController {
 };
 exports.OrdersController = OrdersController;
 __decorate([
-    (0, swagger_1.ApiBody)({
-        schema: {
-            type: 'object',
-            properties: {
-                name: { type: 'string' },
-                surname: { type: 'string' },
-                phone: { type: 'string' },
-                city: { type: 'string' },
-                product_id: { type: 'number' },
-                count: { type: 'number' },
-            },
-        },
-    }),
     (0, common_1.Post)(),
+    openapi.ApiResponse({ status: 201 }),
     __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [create_order_dto_1.CreateOrderDto]),
@@ -65,12 +59,34 @@ __decorate([
 ], OrdersController.prototype, "create", null);
 __decorate([
     (0, common_1.Get)(),
+    openapi.ApiResponse({ status: 200, type: [Object] }),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", void 0)
 ], OrdersController.prototype, "findAll", null);
 __decorate([
+    (0, common_1.UseGuards)(auth_guad_1.AuthGuard),
+    (0, swagger_1.ApiBearerAuth)(),
+    (0, common_1.Get)('referral'),
+    openapi.ApiResponse({ status: 200, type: [Object] }),
+    __param(0, (0, common_1.Request)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object]),
+    __metadata("design:returntype", void 0)
+], OrdersController.prototype, "findReferralOrders", null);
+__decorate([
+    (0, common_1.Get)('referral/:skip/:take'),
+    openapi.ApiResponse({ status: 200, type: [Object] }),
+    __param(0, (0, common_1.Param)('skip')),
+    __param(1, (0, common_1.Param)('take')),
+    __param(2, (0, common_1.Request)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String, String, Object]),
+    __metadata("design:returntype", void 0)
+], OrdersController.prototype, "findReferralOrdersPaginated", null);
+__decorate([
     (0, common_1.Get)(':id'),
+    openapi.ApiResponse({ status: 200, type: String }),
     __param(0, (0, common_1.Param)('id')),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String]),
@@ -89,23 +105,17 @@ __decorate([
         },
     }),
     (0, common_1.Post)('/orderStatus'),
+    openapi.ApiResponse({ status: 201 }),
     __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", void 0)
 ], OrdersController.prototype, "updateOrderStatus", null);
 __decorate([
-    (0, common_1.Patch)(':id'),
-    __param(0, (0, common_1.Param)('id')),
-    __param(1, (0, common_1.Body)()),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String, update_order_dto_1.UpdateOrderDto]),
-    __metadata("design:returntype", void 0)
-], OrdersController.prototype, "update", null);
-__decorate([
     (0, common_1.UseGuards)(admin_guad_1.AdminGuard),
     (0, swagger_1.ApiBearerAuth)(),
     (0, common_1.Delete)(':id'),
+    openapi.ApiResponse({ status: 200, type: String }),
     __param(0, (0, common_1.Param)('id')),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String]),

@@ -7,31 +7,21 @@ import {
   Param,
   Delete,
   UseGuards,
+  Request,
 } from '@nestjs/common';
 import { OrdersService } from './orders.service';
 import { CreateOrderDto } from './dto/create-order.dto';
 import { UpdateOrderDto } from './dto/update-order.dto';
 import { ApiBearerAuth, ApiBody, ApiTags } from '@nestjs/swagger';
 import { AdminGuard } from 'src/admin/admin.guad';
+import { AuthGuard } from 'src/auth/auth.guad';
+import { OrderStatus } from '@prisma/client';
 
 @ApiTags('Orders')
 @Controller('orders')
 export class OrdersController {
   constructor(private readonly ordersService: OrdersService) {}
 
-  @ApiBody({
-    schema: {
-      type: 'object',
-      properties: {
-        name: { type: 'string' },
-        surname: { type: 'string' },
-        phone: { type: 'string' },
-        city: { type: 'string' },
-        product_id: { type: 'number' },
-        count: { type: 'number' },
-      },
-    },
-  })
   @Post()
   create(@Body() createOrderDto: CreateOrderDto) {
     return this.ordersService.create(createOrderDto);
@@ -42,11 +32,27 @@ export class OrdersController {
     return this.ordersService.findAll();
   }
 
+  @UseGuards(AuthGuard)
+  @ApiBearerAuth()
+  @Get('referral')
+  findReferralOrders(@Request() req: any) {
+    const id = req.user_id;
+    return this.ordersService.findReferralOrders(+id);
+  }
+
+  @Get('referral/:skip/:take')
+  findReferralOrdersPaginated(
+    @Param('skip') skip: string,
+    @Param('take') take: string,
+    @Request() req: any,
+  ) {
+    const id = req.user_id;
+    return this.ordersService.findReferralOrdersPaginated(+id, +skip, +take);
+  }
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.ordersService.findOne(+id);
   }
-
 
   @UseGuards(AdminGuard)
   @ApiBearerAuth()
@@ -64,15 +70,10 @@ export class OrdersController {
     @Body()
     updateOrderDto: {
       order_id: number;
-      status: string;
+      status: OrderStatus;
     },
   ) {
     return this.ordersService.updateOrderStatus(updateOrderDto);
-  }
-
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateOrderDto: UpdateOrderDto) {
-    return this.ordersService.update(+id, updateOrderDto);
   }
 
   @UseGuards(AdminGuard)

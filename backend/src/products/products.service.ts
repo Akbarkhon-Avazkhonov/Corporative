@@ -4,7 +4,6 @@ import { UpdateProductDto } from './dto/update-product.dto';
 import { PrismaService } from 'src/prisma.service';
 
 import { promises as fsPromises } from 'fs';
-import { join } from 'path';
 
 @Injectable()
 export class ProductsService {
@@ -46,7 +45,7 @@ export class ProductsService {
       await fsPromises.writeFile(filePath, file.buffer);
 
       // Returning the file path or any other relevant information
-      const fileUrl = `http://localhost:3002/${filePath}`;
+      const fileUrl = `${process.env.BACKEND_URL}/${filePath}`;
       return fileUrl;
     } catch (error) {
       throw new HttpException(error, HttpStatus.FORBIDDEN);

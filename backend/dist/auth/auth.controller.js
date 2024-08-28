@@ -13,6 +13,7 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.AuthController = void 0;
+const openapi = require("@nestjs/swagger");
 const common_1 = require("@nestjs/common");
 const auth_service_1 = require("./auth.service");
 const swagger_1 = require("@nestjs/swagger");
@@ -64,6 +65,7 @@ __decorate([
         description: 'Cannot authorize with given Email and Password',
     }),
     (0, common_1.Post)('register'),
+    openapi.ApiResponse({ status: 201 }),
     __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [auth_product_dto_1.CreateUserDto]),
@@ -80,6 +82,7 @@ __decorate([
         },
     }),
     (0, common_1.Post)('send-phone-code'),
+    openapi.ApiResponse({ status: 201, type: Boolean }),
     __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object]),
@@ -97,6 +100,7 @@ __decorate([
         },
     }),
     (0, common_1.Post)('verify-phone-code'),
+    openapi.ApiResponse({ status: 201, type: Boolean }),
     __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object]),
@@ -119,6 +123,7 @@ __decorate([
         },
     }),
     (0, common_1.Post)('login'),
+    openapi.ApiResponse({ status: 201 }),
     __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object]),
@@ -128,6 +133,7 @@ __decorate([
     (0, common_1.UseGuards)(auth_guad_1.AuthGuard),
     (0, swagger_1.ApiBearerAuth)(),
     (0, common_1.Get)('profile'),
+    openapi.ApiResponse({ status: 200 }),
     __param(0, (0, common_1.Request)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object]),
