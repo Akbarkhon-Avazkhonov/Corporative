@@ -16,6 +16,7 @@ import { ApiBearerAuth, ApiBody, ApiTags } from '@nestjs/swagger';
 import { AdminGuard } from 'src/admin/admin.guad';
 import { AuthGuard } from 'src/auth/auth.guad';
 import { OrderStatus } from '@prisma/client';
+import { BasicAuthGuard } from 'src/admin/basicAuth.guard';
 
 @ApiTags('Orders')
 @Controller('orders')
@@ -54,7 +55,7 @@ export class OrdersController {
     return this.ordersService.findOne(+id);
   }
 
-  @UseGuards(AdminGuard)
+  @UseGuards(BasicAuthGuard)
   @ApiBearerAuth()
   @ApiBody({
     schema: {

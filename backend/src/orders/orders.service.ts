@@ -49,6 +49,7 @@ export class OrdersService {
     order_id: number;
     status: OrderStatus;
   }) {
+    return true;
     if (updateOrderDto.status === OrderStatus.DONE) {
       const user = await this.prisma.orders.findUnique({
         where: { id: updateOrderDto.order_id },
