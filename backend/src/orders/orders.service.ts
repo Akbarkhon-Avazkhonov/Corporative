@@ -10,10 +10,10 @@ export class OrdersService {
   async create(createOrderDto: CreateOrderDto) {
     if (createOrderDto.link_id) {
       const link = await this.prisma.link.findUnique({
-        where: { id: createOrderDto.link_id },
+        where: { id: +createOrderDto.link_id },
         select: { user_id: true },
       });
-      createOrderDto.user_id = link.user_id;
+      createOrderDto.user_id = +link.user_id;
     }
 
     return await this.prisma.orders.create({ data: createOrderDto });
