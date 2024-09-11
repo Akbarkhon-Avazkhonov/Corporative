@@ -74,6 +74,8 @@ export class OrdersController {
     updateOrderDto: {
       order_id: number;
       status: OrderStatus;
+      comment: string;
+      reason: string;
     },
   ) {
     return this.ordersService.updateOrderStatus(updateOrderDto);

@@ -11,6 +11,8 @@ export declare class OrdersController {
         phone: string;
         city: string;
         product_id: number;
+        comment: string;
+        reason: string;
         count: number;
         status: import(".prisma/client").$Enums.OrderStatus;
         link_id: number;
@@ -40,6 +42,8 @@ export declare class OrdersController {
         phone: string;
         city: string;
         product_id: number;
+        comment: string;
+        reason: string;
         count: number;
         status: import(".prisma/client").$Enums.OrderStatus;
         link_id: number;
@@ -62,6 +66,8 @@ export declare class OrdersController {
         phone: string;
         city: string;
         product_id: number;
+        comment: string;
+        reason: string;
         count: number;
         status: import(".prisma/client").$Enums.OrderStatus;
         link_id: number;
@@ -84,6 +90,8 @@ export declare class OrdersController {
         phone: string;
         city: string;
         product_id: number;
+        comment: string;
+        reason: string;
         count: number;
         status: import(".prisma/client").$Enums.OrderStatus;
         link_id: number;
@@ -101,11 +109,35 @@ export declare class OrdersController {
         phone: string;
         city: string;
         product_id: number;
+        comment: string;
+        reason: string;
         count: number;
         status: import(".prisma/client").$Enums.OrderStatus;
         link_id: number;
         user_id: number;
         created_at: Date;
     }>;
+    updateOrdersStatus(updateOrdersDto: {
+        orders: {
+            order_id: number;
+            status: OrderStatus;
+            comment: string;
+            reason: string;
+        }[];
+    }): Promise<{
+        id: number;
+        name: string;
+        surname: string;
+        phone: string;
+        city: string;
+        product_id: number;
+        comment: string;
+        reason: string;
+        count: number;
+        status: import(".prisma/client").$Enums.OrderStatus;
+        link_id: number;
+        user_id: number;
+        created_at: Date;
+    }[]>;
     remove(id: string): string;
 }

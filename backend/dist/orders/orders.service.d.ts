@@ -11,6 +11,8 @@ export declare class OrdersService {
         phone: string;
         city: string;
         product_id: number;
+        comment: string;
+        reason: string;
         count: number;
         status: import(".prisma/client").$Enums.OrderStatus;
         link_id: number;
@@ -40,6 +42,8 @@ export declare class OrdersService {
         phone: string;
         city: string;
         product_id: number;
+        comment: string;
+        reason: string;
         count: number;
         status: import(".prisma/client").$Enums.OrderStatus;
         link_id: number;
@@ -62,6 +66,8 @@ export declare class OrdersService {
         phone: string;
         city: string;
         product_id: number;
+        comment: string;
+        reason: string;
         count: number;
         status: import(".prisma/client").$Enums.OrderStatus;
         link_id: number;
@@ -84,6 +90,8 @@ export declare class OrdersService {
         phone: string;
         city: string;
         product_id: number;
+        comment: string;
+        reason: string;
         count: number;
         status: import(".prisma/client").$Enums.OrderStatus;
         link_id: number;
@@ -94,6 +102,8 @@ export declare class OrdersService {
     updateOrderStatus(updateOrderDto: {
         order_id: number;
         status: OrderStatus;
+        comment: string;
+        reason: string;
     }): Promise<{
         id: number;
         name: string;
@@ -101,12 +111,36 @@ export declare class OrdersService {
         phone: string;
         city: string;
         product_id: number;
+        comment: string;
+        reason: string;
         count: number;
         status: import(".prisma/client").$Enums.OrderStatus;
         link_id: number;
         user_id: number;
         created_at: Date;
     }>;
+    updateOrdersStatus(updateOrderDto: {
+        orders: {
+            order_id: number;
+            status: OrderStatus;
+            comment: string;
+            reason: string;
+        }[];
+    }): Promise<{
+        id: number;
+        name: string;
+        surname: string;
+        phone: string;
+        city: string;
+        product_id: number;
+        comment: string;
+        reason: string;
+        count: number;
+        status: import(".prisma/client").$Enums.OrderStatus;
+        link_id: number;
+        user_id: number;
+        created_at: Date;
+    }[]>;
     update(id: number): string;
     remove(id: number): string;
 }

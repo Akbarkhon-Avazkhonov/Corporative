@@ -20,10 +20,10 @@ let OrdersService = class OrdersService {
     async create(createOrderDto) {
         if (createOrderDto.link_id) {
             const link = await this.prisma.link.findUnique({
-                where: { id: createOrderDto.link_id },
+                where: { id: +createOrderDto.link_id },
                 select: { user_id: true },
             });
-            createOrderDto.user_id = link.user_id;
+            createOrderDto.user_id = +link.user_id;
         }
         return await this.prisma.orders.create({ data: createOrderDto });
     }
@@ -52,26 +52,59 @@ let OrdersService = class OrdersService {
         return `This action returns a #${id} order`;
     }
     async updateOrderStatus(updateOrderDto) {
-        if (updateOrderDto.status === client_1.OrderStatus.DONE) {
-            const user = await this.prisma.orders.findUnique({
-                where: { id: updateOrderDto.order_id },
-                select: { user_id: true },
-            });
-            if (user) {
-                await this.prisma.user.update({
-                    where: { id: user.user_id },
-                    data: { balance: { increment: 1 } },
+        try {
+            if (updateOrderDto.status === client_1.OrderStatus.DONE) {
+                const user = await this.prisma.orders.findUnique({
+                    where: { id: updateOrderDto.order_id },
+                    select: { user_id: true },
+                });
+                if (user) {
+                    await this.prisma.user.update({
+                        where: { id: user.user_id },
+                        data: { balance: { increment: 1 } },
+                    });
+                }
+            }
+            if (updateOrderDto.order_id) {
+                return this.prisma.orders.update({
+                    where: { id: +updateOrderDto.order_id },
+                    data: {
+                        status: updateOrderDto.status,
+                        comment: updateOrderDto.comment,
+                        reason: updateOrderDto.reason,
+                    },
                 });
             }
+            else {
+                throw new common_1.UnauthorizedException();
+            }
         }
-        if (updateOrderDto.order_id) {
-            return this.prisma.orders.update({
-                where: { id: +updateOrderDto.order_id },
-                data: { status: updateOrderDto.status },
+        catch (error) {
+            throw new common_1.HttpException(error, common_1.HttpStatus.FORBIDDEN);
+        }
+    }
+    async updateOrdersStatus(updateOrderDto) {
+        try {
+            const orders = updateOrderDto.orders.map((order) => {
+                if (order.status === client_1.OrderStatus.DONE) {
+                    this.prisma.user.update({
+                        where: { id: order.order_id },
+                        data: { balance: { increment: 1 } },
+                    });
+                }
+                return this.prisma.orders.update({
+                    where: { id: order.order_id },
+                    data: {
+                        status: order.status,
+                        comment: order.comment,
+                        reason: order.reason,
+                    },
+                });
             });
+            return await this.prisma.$transaction(orders);
         }
-        else {
-            throw new common_1.UnauthorizedException();
+        catch (error) {
+            throw new common_1.HttpException(error, common_1.HttpStatus.FORBIDDEN);
         }
     }
     update(id) {

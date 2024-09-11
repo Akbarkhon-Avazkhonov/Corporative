@@ -20,6 +20,7 @@ const create_order_dto_1 = require("./dto/create-order.dto");
 const swagger_1 = require("@nestjs/swagger");
 const admin_guad_1 = require("../admin/admin.guad");
 const auth_guad_1 = require("../auth/auth.guad");
+const basicAuth_guard_1 = require("../admin/basicAuth.guard");
 let OrdersController = class OrdersController {
     constructor(ordersService) {
         this.ordersService = ordersService;
@@ -43,6 +44,9 @@ let OrdersController = class OrdersController {
     }
     updateOrderStatus(updateOrderDto) {
         return this.ordersService.updateOrderStatus(updateOrderDto);
+    }
+    updateOrdersStatus(updateOrdersDto) {
+        return this.ordersService.updateOrdersStatus(updateOrdersDto);
     }
     remove(id) {
         return this.ordersService.remove(+id);
@@ -93,7 +97,7 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], OrdersController.prototype, "findOne", null);
 __decorate([
-    (0, common_1.UseGuards)(admin_guad_1.AdminGuard),
+    (0, common_1.UseGuards)(basicAuth_guard_1.BasicAuthGuard),
     (0, swagger_1.ApiBearerAuth)(),
     (0, swagger_1.ApiBody)({
         schema: {
@@ -101,6 +105,8 @@ __decorate([
             properties: {
                 order_id: { type: 'number' },
                 status: { type: 'string' },
+                comment: { type: 'string' },
+                reason: { type: 'string' },
             },
         },
     }),
@@ -111,6 +117,16 @@ __decorate([
     __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", void 0)
 ], OrdersController.prototype, "updateOrderStatus", null);
+__decorate([
+    (0, common_1.UseGuards)(basicAuth_guard_1.BasicAuthGuard),
+    (0, swagger_1.ApiBearerAuth)(),
+    (0, common_1.Post)('/ordersStatus'),
+    openapi.ApiResponse({ status: 201 }),
+    __param(0, (0, common_1.Body)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object]),
+    __metadata("design:returntype", void 0)
+], OrdersController.prototype, "updateOrdersStatus", null);
 __decorate([
     (0, common_1.UseGuards)(admin_guad_1.AdminGuard),
     (0, swagger_1.ApiBearerAuth)(),
