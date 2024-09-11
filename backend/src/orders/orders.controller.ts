@@ -25,6 +25,9 @@ export class OrdersController {
 
   @Post()
   create(@Body() createOrderDto: CreateOrderDto) {
+    if (createOrderDto.link_id) {
+      createOrderDto.link_id = +createOrderDto.link_id;
+    }
     return this.ordersService.create(createOrderDto);
   }
 
