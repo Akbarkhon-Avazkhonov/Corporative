@@ -21,6 +21,7 @@ export class OrdersService {
     }
 
     const order = await this.prisma.orders.create({ data: createOrderDto });
+    console.log(order);
 
     return order;
   }
