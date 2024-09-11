@@ -1,4 +1,9 @@
-import { Injectable, UnauthorizedException } from '@nestjs/common';
+import {
+  HttpException,
+  HttpStatus,
+  Injectable,
+  UnauthorizedException,
+} from '@nestjs/common';
 import { CreateOrderDto } from './dto/create-order.dto';
 import { UpdateOrderDto } from './dto/update-order.dto';
 import { PrismaService } from 'src/prisma.service';
@@ -51,29 +56,33 @@ export class OrdersService {
     comment: string;
     reason: string;
   }) {
-    if (updateOrderDto.status === OrderStatus.DONE) {
-      const user = await this.prisma.orders.findUnique({
-        where: { id: updateOrderDto.order_id },
-        select: { user_id: true },
-      });
-      if (user) {
-        await this.prisma.user.update({
-          where: { id: user.user_id },
-          data: { balance: { increment: 1 } },
+    try {
+      if (updateOrderDto.status === OrderStatus.DONE) {
+        const user = await this.prisma.orders.findUnique({
+          where: { id: updateOrderDto.order_id },
+          select: { user_id: true },
         });
+        if (user) {
+          await this.prisma.user.update({
+            where: { id: user.user_id },
+            data: { balance: { increment: 1 } },
+          });
+        }
       }
-    }
-    if (updateOrderDto.order_id) {
-      return this.prisma.orders.update({
-        where: { id: +updateOrderDto.order_id },
-        data: {
-          status: updateOrderDto.status,
-          comment: updateOrderDto.comment,
-          reason: updateOrderDto.reason,
-        },
-      });
-    } else {
-      throw new UnauthorizedException();
+      if (updateOrderDto.order_id) {
+        return this.prisma.orders.update({
+          where: { id: +updateOrderDto.order_id },
+          data: {
+            status: updateOrderDto.status,
+            comment: updateOrderDto.comment,
+            reason: updateOrderDto.reason,
+          },
+        });
+      } else {
+        throw new UnauthorizedException();
+      }
+    } catch (error) {
+      throw new HttpException(error, HttpStatus.FORBIDDEN);
     }
   }
 
@@ -85,23 +94,27 @@ export class OrdersService {
       reason: string;
     }[];
   }) {
-    const orders = updateOrderDto.orders.map((order) => {
-      if (order.status === OrderStatus.DONE) {
-        this.prisma.user.update({
+    try {
+      const orders = updateOrderDto.orders.map((order) => {
+        if (order.status === OrderStatus.DONE) {
+          this.prisma.user.update({
+            where: { id: order.order_id },
+            data: { balance: { increment: 1 } },
+          });
+        }
+        return this.prisma.orders.update({
           where: { id: order.order_id },
-          data: { balance: { increment: 1 } },
+          data: {
+            status: order.status,
+            comment: order.comment,
+            reason: order.reason,
+          },
         });
-      }
-      return this.prisma.orders.update({
-        where: { id: order.order_id },
-        data: {
-          status: order.status,
-          comment: order.comment,
-          reason: order.reason,
-        },
       });
-    });
-    return await this.prisma.$transaction(orders);
+      return await this.prisma.$transaction(orders);
+    } catch (error) {
+      throw new HttpException(error, HttpStatus.FORBIDDEN);
+    }
   }
 
   update(id: number) {
