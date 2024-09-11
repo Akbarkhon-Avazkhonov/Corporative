@@ -11,6 +11,7 @@ enum OrderStatus {
   NEW
   IN_PROGRESS
   DONE
+  PAID
   TRASH
   REJECTED
 }

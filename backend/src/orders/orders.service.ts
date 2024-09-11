@@ -20,7 +20,9 @@ export class OrdersService {
       createOrderDto.user_id = +link.user_id;
     }
 
-    return await this.prisma.orders.create({ data: createOrderDto });
+    const order = await this.prisma.orders.create({ data: createOrderDto });
+
+    return order;
   }
 
   async findAll() {
@@ -56,7 +58,7 @@ export class OrdersService {
     reason: string;
   }) {
     try {
-      if (updateOrderDto.status === OrderStatus.DONE) {
+      if (updateOrderDto.status === OrderStatus.PAID) {
         const user = await this.prisma.orders.findUnique({
           where: { id: updateOrderDto.order_id },
           select: { user_id: true },
@@ -95,7 +97,7 @@ export class OrdersService {
   }) {
     try {
       const orders = updateOrderDto.orders.map((order) => {
-        if (order.status === OrderStatus.DONE) {
+        if (order.status === OrderStatus.PAID) {
           this.prisma.user.update({
             where: { id: order.order_id },
             data: { balance: { increment: 1 } },

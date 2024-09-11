@@ -25,7 +25,8 @@ let OrdersService = class OrdersService {
             });
             createOrderDto.user_id = +link.user_id;
         }
-        return await this.prisma.orders.create({ data: createOrderDto });
+        const order = await this.prisma.orders.create({ data: createOrderDto });
+        return order;
     }
     async findAll() {
         return await this.prisma.orders.findMany({

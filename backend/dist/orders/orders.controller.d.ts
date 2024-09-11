@@ -102,6 +102,8 @@ export declare class OrdersController {
     updateOrderStatus(updateOrderDto: {
         order_id: number;
         status: OrderStatus;
+        comment: string;
+        reason: string;
     }): Promise<{
         id: number;
         name: string;
