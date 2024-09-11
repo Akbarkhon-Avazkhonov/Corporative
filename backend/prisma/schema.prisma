@@ -87,6 +87,8 @@ model Orders {
   phone      String
   city       String
   product_id Int
+  comment    String?     @default("") // comment
+  reason     String?     @default("") // причина отказа
   Product    Product     @relation(fields: [product_id], references: [id])
   count      Int
   status     OrderStatus @default(NEW)

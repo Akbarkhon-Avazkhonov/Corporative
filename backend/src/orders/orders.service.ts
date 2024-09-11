@@ -48,8 +48,9 @@ export class OrdersService {
   async updateOrderStatus(updateOrderDto: {
     order_id: number;
     status: OrderStatus;
+    comment: string;
+    reason: string;
   }) {
-    return true;
     if (updateOrderDto.status === OrderStatus.DONE) {
       const user = await this.prisma.orders.findUnique({
         where: { id: updateOrderDto.order_id },
@@ -65,12 +66,44 @@ export class OrdersService {
     if (updateOrderDto.order_id) {
       return this.prisma.orders.update({
         where: { id: +updateOrderDto.order_id },
-        data: { status: updateOrderDto.status },
+        data: {
+          status: updateOrderDto.status,
+          comment: updateOrderDto.comment,
+          reason: updateOrderDto.reason,
+        },
       });
     } else {
       throw new UnauthorizedException();
     }
   }
+
+  async updateOrdersStatus(updateOrderDto: {
+    orders: {
+      order_id: number;
+      status: OrderStatus;
+      comment: string;
+      reason: string;
+    }[];
+  }) {
+    const orders = updateOrderDto.orders.map((order) => {
+      if (order.status === OrderStatus.DONE) {
+        this.prisma.user.update({
+          where: { id: order.order_id },
+          data: { balance: { increment: 1 } },
+        });
+      }
+      return this.prisma.orders.update({
+        where: { id: order.order_id },
+        data: {
+          status: order.status,
+          comment: order.comment,
+          reason: order.reason,
+        },
+      });
+    });
+    return await this.prisma.$transaction(orders);
+  }
+
   update(id: number) {
     return `This action updates a #${id} order`;
   }

@@ -63,6 +63,8 @@ export class OrdersController {
       properties: {
         order_id: { type: 'number' },
         status: { type: 'string' },
+        comment: { type: 'string' },
+        reason: { type: 'string' },
       },
     },
   })
@@ -75,6 +77,23 @@ export class OrdersController {
     },
   ) {
     return this.ordersService.updateOrderStatus(updateOrderDto);
+  }
+
+  @UseGuards(BasicAuthGuard)
+  @ApiBearerAuth()
+  @Post('/ordersStatus')
+  updateOrdersStatus(
+    @Body()
+    updateOrdersDto: {
+      orders: {
+        order_id: number;
+        status: OrderStatus;
+        comment: string;
+        reason: string;
+      }[];
+    },
+  ) {
+    return this.ordersService.updateOrdersStatus(updateOrdersDto);
   }
 
   @UseGuards(AdminGuard)
