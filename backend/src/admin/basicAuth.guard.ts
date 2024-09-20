@@ -33,8 +33,8 @@ export class BasicAuthGuard implements CanActivate {
 
   validateUser(username: string, password: string): boolean {
     // Replace with actual user validation logic
-    const validUsername = '1cauth';
-    const validPassword = 'N+uih371qHh+';
+    const validUsername = process.env.BASIC_AUTH;
+    const validPassword = process.env.BASIC_PASSWORD;
 
     return username === validUsername && password === validPassword;
   }
