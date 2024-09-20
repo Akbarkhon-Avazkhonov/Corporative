@@ -26,6 +26,9 @@ let OrdersController = class OrdersController {
         this.ordersService = ordersService;
     }
     create(createOrderDto) {
+        if (createOrderDto.link_id) {
+            createOrderDto.link_id = +createOrderDto.link_id;
+        }
         return this.ordersService.create(createOrderDto);
     }
     findAll() {
@@ -55,7 +58,7 @@ let OrdersController = class OrdersController {
 exports.OrdersController = OrdersController;
 __decorate([
     (0, common_1.Post)(),
-    openapi.ApiResponse({ status: 201 }),
+    openapi.ApiResponse({ status: 201, type: Object }),
     __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [create_order_dto_1.CreateOrderDto]),

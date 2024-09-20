@@ -5,6 +5,22 @@ export declare class OrdersService {
     private readonly prisma;
     constructor(prisma: PrismaService);
     create(createOrderDto: CreateOrderDto): Promise<{
+        Product: {
+            id: number;
+            title: string;
+            compound: string;
+            category_id: number;
+            action: string;
+            price: number;
+            description: string;
+            count: number;
+            testimony: string;
+            contraction: string;
+            image: import(".prisma/client").Prisma.JsonValue;
+            color: number;
+            extra: import(".prisma/client").Prisma.JsonValue;
+        };
+    } & {
         id: number;
         name: string;
         surname: string;

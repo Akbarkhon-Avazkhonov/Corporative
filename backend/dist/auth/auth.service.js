@@ -88,6 +88,12 @@ let AuthService = class AuthService {
                 OR: [{ status: 'TRASH' }],
             },
         });
+        const PAID = await this.prisma.orders.count({
+            where: {
+                user_id: user.id,
+                OR: [{ status: 'PAID' }],
+            },
+        });
         if (!user) {
             throw new common_1.HttpException('User not found', common_1.HttpStatus.NOT_FOUND);
         }
@@ -101,6 +107,7 @@ let AuthService = class AuthService {
             Orders: user.Orders,
             total_orders: user._count.Orders,
             referral_links: user._count.Links,
+            PAID: PAID,
             DONE: DONE,
             IN_PROGRESS: IN_PROGRESS,
             REJECTED: REJECTED,
