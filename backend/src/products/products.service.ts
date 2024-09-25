@@ -29,7 +29,7 @@ export class ProductsService {
           },
           body: JSON.stringify({
             id: product.id,
-            title: product.title,
+            title: 'Corporative' + product.title,
             price: product.price,
             new_price: 0,
           }),
@@ -73,7 +73,7 @@ export class ProductsService {
           },
           body: JSON.stringify({
             id: product.id,
-            title: product.title,
+            title: 'Corporative' + product.title,
             price: product.price,
             new_price: product.price,
           }),
@@ -94,7 +94,7 @@ export class ProductsService {
           },
           body: JSON.stringify({
             id: product.id,
-            title: product.title,
+            title: 'Corporative' + product.title,
             price: product.price,
             new_price: 0,
           }),

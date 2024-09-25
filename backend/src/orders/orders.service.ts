@@ -159,7 +159,7 @@ async function sendOrderTo1C(order) {
     city: order.city,
     items: {
       id: order.Product.id,
-      title: order.Product.title,
+      title: 'Corporative' + order.Product.title,
       quantity: order.count,
       PromotionalPrice: order.Product.price,
     },
