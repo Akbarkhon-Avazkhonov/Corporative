@@ -14,6 +14,7 @@ import { AdminModule } from './admin/admin.module';
 import { GuidesModule } from './guides/guides.module';
 import { BidModule } from './bid/bid.module';
 import { ProfileModule } from './profile/profile.module';
+import { PrismaService } from './prisma.service';
 @Module({
   imports: [
     AuthModule,
@@ -32,6 +33,6 @@ import { ProfileModule } from './profile/profile.module';
     ProfileModule,
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [AppService, PrismaService],
 })
 export class AppModule {}
