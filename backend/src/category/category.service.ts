@@ -11,7 +11,18 @@ export class CategoryService {
   }
 
   async findAll() {
-    return await this.prisma.category.findMany();
+    const categories: any = await this.prisma.category.findMany();
+
+    const categoriesWithCount = await Promise.all(
+      categories.map(async (category) => {
+        const count = await this.prisma.product.count({
+          where: { category_id: category.id },
+        });
+        return { ...category, count }; // Add the count to each category
+      }),
+    );
+
+    return categoriesWithCount;
   }
 
   async findOne(id: number) {
