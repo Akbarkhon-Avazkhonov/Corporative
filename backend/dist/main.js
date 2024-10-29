@@ -19,20 +19,7 @@ async function bootstrap() {
         .build();
     const document = swagger_1.SwaggerModule.createDocument(app, config);
     swagger_1.SwaggerModule.setup('api', app, document);
-    app.enableCors({
-        origin: [
-            'https://euphoria-group.uz/',
-            'flashcloud.uz',
-            '1c.corp.euphoriagroup.uz',
-            'http://localhost:3000',
-            'https://euphoria-admin.uz',
-            'https://euphoria-admin.uz/',
-            'https://euphoria-referral.uz',
-            'https://euphoria-referral.uz/',
-        ],
-        methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
-        allowedHeaders: 'Content-Type, Accept',
-    });
+    app.enableCors();
     await app.listen(4000);
 }
 bootstrap();
