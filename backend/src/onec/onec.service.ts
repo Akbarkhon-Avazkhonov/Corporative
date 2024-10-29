@@ -6,8 +6,8 @@ import { Cron, CronExpression } from '@nestjs/schedule';
 export class OnecService {
   private readonly logger = new Logger(OnecService.name);
 
-  @Cron(CronExpression.EVERY_10_SECONDS)
-  handleCron() {
-    this.logger.debug('Called when the current second is 5');
-  }
+  // @Cron(CronExpression.EVERY_10_SECONDS)
+  // handleCron() {
+  //   this.logger.debug('Called when the current second is 5');
+  // }
 }
