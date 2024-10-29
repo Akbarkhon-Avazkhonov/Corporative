@@ -22,6 +22,8 @@ const admin_module_1 = require("./admin/admin.module");
 const guides_module_1 = require("./guides/guides.module");
 const bid_module_1 = require("./bid/bid.module");
 const profile_module_1 = require("./profile/profile.module");
+const prisma_service_1 = require("./prisma.service");
+const onec_module_1 = require("./onec/onec.module");
 let AppModule = class AppModule {
 };
 exports.AppModule = AppModule;
@@ -42,9 +44,10 @@ exports.AppModule = AppModule = __decorate([
             guides_module_1.GuidesModule,
             bid_module_1.BidModule,
             profile_module_1.ProfileModule,
+            onec_module_1.OnecModule,
         ],
         controllers: [app_controller_1.AppController],
-        providers: [app_service_1.AppService],
+        providers: [app_service_1.AppService, prisma_service_1.PrismaService],
     })
 ], AppModule);
 //# sourceMappingURL=app.module.js.map

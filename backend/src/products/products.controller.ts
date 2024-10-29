@@ -21,7 +21,6 @@ import {
   ApiDefaultResponse,
   ApiTags,
 } from '@nestjs/swagger';
-import { AuthGuard } from 'src/auth/auth.guad';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { AdminGuard } from 'src/admin/admin.guad';
 
@@ -83,6 +82,16 @@ export class ProductsController {
   @Get()
   findAll() {
     return this.productsService.findAll();
+  }
+
+  @Get('some/:take/:skip')
+  findSome(@Param('take') take: number, @Param('skip') skip: number) {
+    return this.productsService.findSome(take, skip);
+  }
+
+  @Get('search/:search')
+  search(@Param('search') search: string) {
+    return this.productsService.search(search);
   }
 
   @Get(':id')

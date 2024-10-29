@@ -20,7 +20,14 @@ let CategoryService = class CategoryService {
         return await this.prisma.category.create({ data: createCategoryDto });
     }
     async findAll() {
-        return await this.prisma.category.findMany();
+        const categories = await this.prisma.category.findMany();
+        const categoriesWithCount = await Promise.all(categories.map(async (category) => {
+            const count = await this.prisma.product.count({
+                where: { category_id: category.id },
+            });
+            return { ...category, count };
+        }));
+        return categoriesWithCount;
     }
     async findOne(id) {
         return await this.prisma.category.findUnique({ where: { id: id } });

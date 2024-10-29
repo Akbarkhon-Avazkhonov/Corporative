@@ -66,6 +66,37 @@ export declare class OrdersService {
         user_id: number;
         created_at: Date;
     })[]>;
+    findSome(take: number, skip: number): Promise<({
+        Product: {
+            id: number;
+            title: string;
+            compound: string;
+            category_id: number;
+            action: string;
+            price: number;
+            description: string;
+            count: number;
+            testimony: string;
+            contraction: string;
+            image: import(".prisma/client").Prisma.JsonValue;
+            color: number;
+            extra: import(".prisma/client").Prisma.JsonValue;
+        };
+    } & {
+        id: number;
+        name: string;
+        surname: string;
+        phone: string;
+        city: string;
+        product_id: number;
+        comment: string;
+        reason: string;
+        count: number;
+        status: import(".prisma/client").$Enums.OrderStatus;
+        link_id: number;
+        user_id: number;
+        created_at: Date;
+    })[]>;
     findReferralOrders(id: number): Promise<({
         Link: {
             id: number;
@@ -157,6 +188,19 @@ export declare class OrdersService {
         user_id: number;
         created_at: Date;
     }[]>;
-    update(id: number): string;
-    remove(id: number): string;
+    remove(id: number): Promise<{
+        id: number;
+        name: string;
+        surname: string;
+        phone: string;
+        city: string;
+        product_id: number;
+        comment: string;
+        reason: string;
+        count: number;
+        status: import(".prisma/client").$Enums.OrderStatus;
+        link_id: number;
+        user_id: number;
+        created_at: Date;
+    }>;
 }

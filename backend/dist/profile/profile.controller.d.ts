@@ -34,6 +34,31 @@ export declare class ProfileController {
         info: import(".prisma/client").Prisma.JsonValue;
         images: string[];
     })[]>;
+    findSome(take: number, skip: number): Promise<({
+        user: {
+            _count: {
+                Links: number;
+            };
+        } & {
+            id: number;
+            fullname: string;
+            email: string;
+            phone_number: string;
+            password: string;
+            gender: string;
+            isVerified: boolean;
+            age: number;
+            city: string;
+            balance: number;
+            referral_link: string;
+            created_at: Date;
+        };
+    } & {
+        id: number;
+        user_id: number;
+        info: import(".prisma/client").Prisma.JsonValue;
+        images: string[];
+    })[]>;
     findOne(id: string): Promise<{
         user: {
             id: number;

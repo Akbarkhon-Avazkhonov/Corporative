@@ -23,4 +23,20 @@ export declare class AdminController {
     }>;
     getEcoinRate(): Promise<number>;
     changeEcoinRate(body: any): Promise<number>;
+    getUserProfile(id: number): Promise<{
+        id: any;
+        fullname: any;
+        phone_number: any;
+        email: any;
+        balance: any;
+        isVerified: any;
+        Orders: any;
+        total_orders: any;
+        referral_links: any;
+        PAID: number;
+        DONE: number;
+        IN_PROGRESS: number;
+        REJECTED: number;
+        TRASH: number;
+    }>;
 }

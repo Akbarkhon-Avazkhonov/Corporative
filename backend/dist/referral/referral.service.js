@@ -33,6 +33,7 @@ let ReferralService = class ReferralService {
     }
     async findAll(user_id) {
         return await this.prisma.link.findMany({
+            orderBy: { id: 'desc' },
             where: { user_id: user_id },
             include: {
                 _count: {

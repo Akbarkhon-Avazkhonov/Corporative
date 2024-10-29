@@ -9,11 +9,7 @@ export declare class CategoryController {
         title: string;
         super_category_id: number;
     }>;
-    findAll(): Promise<{
-        id: number;
-        title: string;
-        super_category_id: number;
-    }[]>;
+    findAll(): Promise<any[]>;
     findOne(id: string): Promise<{
         id: number;
         title: string;

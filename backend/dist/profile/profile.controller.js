@@ -29,6 +29,9 @@ let ProfileController = class ProfileController {
     findAll() {
         return this.profileService.findAll();
     }
+    findSome(take, skip) {
+        return this.profileService.findSome(take, skip);
+    }
     findOne(id) {
         return this.profileService.findOne(+id);
     }
@@ -77,6 +80,15 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], ProfileController.prototype, "findAll", null);
 __decorate([
+    (0, common_1.Get)('some/:take/:skip'),
+    openapi.ApiResponse({ status: 200, type: [Object] }),
+    __param(0, (0, common_1.Param)('take')),
+    __param(1, (0, common_1.Param)('skip')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Number, Number]),
+    __metadata("design:returntype", void 0)
+], ProfileController.prototype, "findSome", null);
+__decorate([
     (0, common_1.Get)('one/:id'),
     openapi.ApiResponse({ status: 200, type: Object }),
     __param(0, (0, common_1.Param)('id')),
@@ -102,6 +114,7 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], ProfileController.prototype, "remove", null);
 exports.ProfileController = ProfileController = __decorate([
+    (0, swagger_1.ApiTags)('Profile'),
     (0, common_1.Controller)('profile'),
     __metadata("design:paramtypes", [profile_service_1.ProfileService])
 ], ProfileController);

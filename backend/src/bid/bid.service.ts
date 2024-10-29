@@ -14,6 +14,14 @@ export class BidService {
     return await this.prisma.bid.findMany();
   }
 
+  async findSome(take: number, skip: number) {
+    return await this.prisma.bid.findMany({
+      take,
+      skip,
+      orderBy: { id: 'desc' },
+    });
+  }
+
   async remove(id: number) {
     return await this.prisma.bid.delete({ where: { id } });
   }

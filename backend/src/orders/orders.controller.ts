@@ -36,6 +36,11 @@ export class OrdersController {
     return this.ordersService.findAll();
   }
 
+  @Get('some/:take/:skip')
+  findSome(@Param('take') take: number, @Param('skip') skip: number) {
+    return this.ordersService.findSome(take, skip);
+  }
+
   @UseGuards(AuthGuard)
   @ApiBearerAuth()
   @Get('referral')

@@ -37,6 +37,14 @@ export class OrdersService {
     });
   }
 
+  async findSome(take: number, skip: number) {
+    return await this.prisma.orders.findMany({
+      include: { Product: true },
+      take,
+      skip,
+      orderBy: { created_at: 'desc' },
+    });
+  }
   async findReferralOrders(id: number) {
     return await this.prisma.orders.findMany({
       where: { user_id: id },
@@ -50,8 +58,10 @@ export class OrdersService {
       include: { Link: true },
       skip,
       take,
+      orderBy: { created_at: 'desc' },
     });
   }
+
   findOne(id: number) {
     return `This action returns a #${id} order`;
   }
@@ -123,12 +133,8 @@ export class OrdersService {
     }
   }
 
-  update(id: number) {
-    return `This action updates a #${id} order`;
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} order`;
+  async remove(id: number) {
+    return await this.prisma.orders.delete({ where: { id } });
   }
 }
 

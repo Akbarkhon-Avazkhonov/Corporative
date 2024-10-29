@@ -34,6 +34,9 @@ let OrdersController = class OrdersController {
     findAll() {
         return this.ordersService.findAll();
     }
+    findSome(take, skip) {
+        return this.ordersService.findSome(take, skip);
+    }
     findReferralOrders(req) {
         const id = req.user_id;
         return this.ordersService.findReferralOrders(+id);
@@ -71,6 +74,15 @@ __decorate([
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", void 0)
 ], OrdersController.prototype, "findAll", null);
+__decorate([
+    (0, common_1.Get)('some/:take/:skip'),
+    openapi.ApiResponse({ status: 200, type: [Object] }),
+    __param(0, (0, common_1.Param)('take')),
+    __param(1, (0, common_1.Param)('skip')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Number, Number]),
+    __metadata("design:returntype", void 0)
+], OrdersController.prototype, "findSome", null);
 __decorate([
     (0, common_1.UseGuards)(auth_guad_1.AuthGuard),
     (0, swagger_1.ApiBearerAuth)(),
@@ -134,7 +146,7 @@ __decorate([
     (0, common_1.UseGuards)(admin_guad_1.AdminGuard),
     (0, swagger_1.ApiBearerAuth)(),
     (0, common_1.Delete)(':id'),
-    openapi.ApiResponse({ status: 200, type: String }),
+    openapi.ApiResponse({ status: 200 }),
     __param(0, (0, common_1.Param)('id')),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String]),

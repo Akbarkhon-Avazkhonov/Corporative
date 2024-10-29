@@ -34,6 +34,12 @@ let ProductsController = class ProductsController {
     findAll() {
         return this.productsService.findAll();
     }
+    findSome(take, skip) {
+        return this.productsService.findSome(take, skip);
+    }
+    search(search) {
+        return this.productsService.search(search);
+    }
     findOne(id) {
         return this.productsService.findOne(+id);
     }
@@ -111,6 +117,23 @@ __decorate([
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", void 0)
 ], ProductsController.prototype, "findAll", null);
+__decorate([
+    (0, common_1.Get)('some/:take/:skip'),
+    openapi.ApiResponse({ status: 200 }),
+    __param(0, (0, common_1.Param)('take')),
+    __param(1, (0, common_1.Param)('skip')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Number, Number]),
+    __metadata("design:returntype", void 0)
+], ProductsController.prototype, "findSome", null);
+__decorate([
+    (0, common_1.Get)('search/:search'),
+    openapi.ApiResponse({ status: 200 }),
+    __param(0, (0, common_1.Param)('search')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String]),
+    __metadata("design:returntype", void 0)
+], ProductsController.prototype, "search", null);
 __decorate([
     (0, common_1.Get)(':id'),
     openapi.ApiResponse({ status: 200 }),

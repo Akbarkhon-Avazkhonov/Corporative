@@ -22,6 +22,13 @@ let BidService = class BidService {
     async findAll() {
         return await this.prisma.bid.findMany();
     }
+    async findSome(take, skip) {
+        return await this.prisma.bid.findMany({
+            take,
+            skip,
+            orderBy: { id: 'desc' },
+        });
+    }
     async remove(id) {
         return await this.prisma.bid.delete({ where: { id } });
     }

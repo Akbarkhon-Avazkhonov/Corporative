@@ -28,6 +28,9 @@ let BidController = class BidController {
     findAll() {
         return this.bidService.findAll();
     }
+    findSome(take, skip) {
+        return this.bidService.findSome(take, skip);
+    }
     remove(id) {
         return this.bidService.remove(+id);
     }
@@ -59,6 +62,15 @@ __decorate([
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", void 0)
 ], BidController.prototype, "findAll", null);
+__decorate([
+    (0, common_1.Get)('some/:take/:skip'),
+    openapi.ApiResponse({ status: 200 }),
+    __param(0, (0, common_1.Param)('take')),
+    __param(1, (0, common_1.Param)('skip')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Number, Number]),
+    __metadata("design:returntype", void 0)
+], BidController.prototype, "findSome", null);
 __decorate([
     (0, common_1.Delete)(':id'),
     openapi.ApiResponse({ status: 200 }),

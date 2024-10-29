@@ -40,7 +40,30 @@ export class ProductsService {
   }
 
   async findAll() {
-    return await this.prisma.product.findMany();
+    return await this.prisma.product.findMany({
+      orderBy: {
+        id: 'desc',
+      },
+    });
+  }
+
+  async findSome(take: number, skip: number) {
+    return await this.prisma.product.findMany({
+      take: take,
+      skip: skip,
+      orderBy: { id: 'desc' },
+    });
+  }
+
+  async search(search: string) {
+    return await this.prisma.product.findMany({
+      where: {
+        title: {
+          contains: search,
+          mode: 'insensitive',
+        },
+      },
+    });
   }
 
   async findOne(id: number) {
@@ -50,6 +73,7 @@ export class ProductsService {
   async findByCategory(category_id: number) {
     return await this.prisma.product.findMany({
       where: { category_id: category_id },
+      orderBy: { id: 'desc' },
     });
   }
   async update(id: number, updateProductDto: UpdateProductDto) {

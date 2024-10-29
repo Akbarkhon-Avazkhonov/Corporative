@@ -124,7 +124,7 @@ export class AuthService {
         update: { code: code },
         create: { phone: number, code: code },
       });
-      await this.sendSMS(nuprismamber, message);
+      await this.sendSMS(number, message);
       return true;
     } catch (e) {
       throw new HttpException(e.message, HttpStatus.BAD_REQUEST);
@@ -133,7 +133,7 @@ export class AuthService {
   }
 
   async verifyPhoneCode(number: string, code: number) {
-    const phoneCode = await this..phoneCode.findUnique({
+    const phoneCode = await this.prisma.phoneCode.findUnique({
       where: {
         phone: number,
         code: code,

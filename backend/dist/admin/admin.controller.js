@@ -49,6 +49,9 @@ let AdminController = class AdminController {
     changeEcoinRate(body) {
         return this.adminService.changeRate(body.rate);
     }
+    getUserProfile(id) {
+        return this.adminService.getUserProfile(+id);
+    }
 };
 exports.AdminController = AdminController;
 __decorate([
@@ -175,6 +178,17 @@ __decorate([
     __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", void 0)
 ], AdminController.prototype, "changeEcoinRate", null);
+__decorate([
+    (0, swagger_1.ApiTags)('Referral Lincks'),
+    (0, common_1.UseGuards)(admin_guad_1.AdminGuard),
+    (0, swagger_1.ApiBearerAuth)(),
+    (0, common_1.Get)('/user-profile/:id'),
+    openapi.ApiResponse({ status: 200 }),
+    __param(0, (0, common_1.Param)('id')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Number]),
+    __metadata("design:returntype", void 0)
+], AdminController.prototype, "getUserProfile", null);
 exports.AdminController = AdminController = __decorate([
     (0, swagger_1.ApiTags)('Admin'),
     (0, common_1.Controller)('admin'),

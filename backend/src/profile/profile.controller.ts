@@ -15,9 +15,10 @@ import { ProfileService } from './profile.service';
 import { CreateProfileDto } from './dto/create-profile.dto';
 import { UpdateProfileDto } from './dto/update-profile.dto';
 import { AuthGuard } from 'src/auth/auth.guad';
-import { ApiBearerAuth, ApiBody, ApiConsumes } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiBody, ApiConsumes, ApiTags } from '@nestjs/swagger';
 import { FilesInterceptor } from '@nestjs/platform-express';
 
+@ApiTags('Profile')
 @Controller('profile')
 export class ProfileController {
   constructor(private readonly profileService: ProfileService) {}
@@ -52,6 +53,11 @@ export class ProfileController {
   @Get('all')
   findAll() {
     return this.profileService.findAll();
+  }
+
+  @Get('some/:take/:skip')
+  findSome(@Param('take') take: number, @Param('skip') skip: number) {
+    return this.profileService.findSome(take, skip);
   }
 
   @Get('one/:id')

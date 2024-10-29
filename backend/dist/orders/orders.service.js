@@ -38,6 +38,14 @@ let OrdersService = class OrdersService {
             orderBy: { created_at: 'desc' },
         });
     }
+    async findSome(take, skip) {
+        return await this.prisma.orders.findMany({
+            include: { Product: true },
+            take,
+            skip,
+            orderBy: { created_at: 'desc' },
+        });
+    }
     async findReferralOrders(id) {
         return await this.prisma.orders.findMany({
             where: { user_id: id },
@@ -51,6 +59,7 @@ let OrdersService = class OrdersService {
             include: { Link: true },
             skip,
             take,
+            orderBy: { created_at: 'desc' },
         });
     }
     findOne(id) {
@@ -112,11 +121,8 @@ let OrdersService = class OrdersService {
             throw new common_1.HttpException(error, common_1.HttpStatus.FORBIDDEN);
         }
     }
-    update(id) {
-        return `This action updates a #${id} order`;
-    }
-    remove(id) {
-        return `This action removes a #${id} order`;
+    async remove(id) {
+        return await this.prisma.orders.delete({ where: { id } });
     }
 };
 exports.OrdersService = OrdersService;
@@ -147,7 +153,7 @@ async function sendOrderTo1C(order) {
         city: order.city,
         items: {
             id: order.Product.id,
-            title: order.Product.title,
+            title: 'Corporative' + order.Product.title,
             quantity: order.count,
             PromotionalPrice: order.Product.price,
         },

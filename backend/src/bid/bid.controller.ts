@@ -29,6 +29,11 @@ export class BidController {
     return this.bidService.findAll();
   }
 
+  @Get('some/:take/:skip')
+  findSome(@Param('take') take: number, @Param('skip') skip: number) {
+    return this.bidService.findSome(take, skip);
+  }
+
   @Delete(':id')
   remove(@Param('id') id: string) {
     return this.bidService.remove(+id);

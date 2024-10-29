@@ -42,6 +42,58 @@ export class ProfileService {
 
   async findAll() {
     return await this.prisma.profile.findMany({
+      orderBy: { id: 'desc' },
+      include: {
+        user: {
+          include: {
+            _count: {
+              select: { Links: true },
+            },
+          },
+        },
+      },
+    });
+  }
+
+  async search(query: string) {
+    return await this.prisma.profile.findMany({
+      where: {
+        OR: [
+          {
+            user: {
+              fullname: {
+                contains: query,
+                mode: 'insensitive',
+              },
+            },
+          },
+          {
+            user: {
+              email: {
+                contains: query,
+                mode: 'insensitive',
+              },
+            },
+          },
+          {
+            user: {
+              phone_number: {
+                contains: query,
+                mode: 'insensitive',
+              },
+            },
+          },
+        ],
+      },
+      include: { user: true },
+    });
+  }
+
+  async findSome(take: number, skip: number) {
+    return await this.prisma.profile.findMany({
+      take,
+      skip,
+      orderBy: { id: 'desc' },
       include: {
         user: {
           include: {

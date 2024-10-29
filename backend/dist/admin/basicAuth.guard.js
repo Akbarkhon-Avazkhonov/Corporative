@@ -26,8 +26,8 @@ let BasicAuthGuard = class BasicAuthGuard {
         }
     }
     validateUser(username, password) {
-        const validUsername = '1cauth';
-        const validPassword = 'N+uih371qHh+';
+        const validUsername = process.env.BASIC_AUTH;
+        const validPassword = process.env.BASIC_PASSWORD;
         return username === validUsername && password === validPassword;
     }
 };

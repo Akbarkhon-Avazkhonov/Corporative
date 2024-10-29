@@ -36,6 +36,36 @@ export declare class ProductsController {
         color: number;
         extra: import(".prisma/client").Prisma.JsonValue;
     }[]>;
+    findSome(take: number, skip: number): Promise<{
+        id: number;
+        title: string;
+        compound: string;
+        category_id: number;
+        action: string;
+        price: number;
+        description: string;
+        count: number;
+        testimony: string;
+        contraction: string;
+        image: import(".prisma/client").Prisma.JsonValue;
+        color: number;
+        extra: import(".prisma/client").Prisma.JsonValue;
+    }[]>;
+    search(search: string): Promise<{
+        id: number;
+        title: string;
+        compound: string;
+        category_id: number;
+        action: string;
+        price: number;
+        description: string;
+        count: number;
+        testimony: string;
+        contraction: string;
+        image: import(".prisma/client").Prisma.JsonValue;
+        color: number;
+        extra: import(".prisma/client").Prisma.JsonValue;
+    }[]>;
     findOne(id: string): Promise<{
         id: number;
         title: string;

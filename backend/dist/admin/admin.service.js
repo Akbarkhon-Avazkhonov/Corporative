@@ -46,6 +46,22 @@ let AdminService = class AdminService {
         const users = await this.prisma.user.findMany({
             take: 10,
             orderBy: { balance: 'desc' },
+            include: {
+                Links: {
+                    select: {
+                        id: true,
+                        title: true,
+                        product_id: true,
+                        url_link: true,
+                        created_at: true,
+                        Orders: {
+                            select: {
+                                status: true,
+                            },
+                        },
+                    },
+                },
+            },
         });
         for (let i = 0; i < users.length; i++) {
             users[i].total_links = await this.prisma.link.count({
@@ -79,6 +95,69 @@ let AdminService = class AdminService {
         return {
             users: users,
             count: count,
+        };
+    }
+    async getUserProfile(id) {
+        const user = await this.prisma.user.findUnique({
+            where: { id: id },
+            include: {
+                Orders: {
+                    take: 100,
+                    orderBy: { created_at: 'desc' },
+                },
+                _count: {
+                    select: { Links: true, Orders: true },
+                },
+            },
+        });
+        if (!user) {
+            throw new common_1.HttpException('User not found', common_1.HttpStatus.NOT_FOUND);
+        }
+        const DONE = await this.prisma.orders.count({
+            where: { user_id: user.id, status: 'DONE' },
+        });
+        const IN_PROGRESS = await this.prisma.orders.count({
+            where: {
+                user_id: user.id,
+                OR: [{ status: 'NEW' }, { status: 'IN_PROGRESS' }],
+            },
+        });
+        const REJECTED = await this.prisma.orders.count({
+            where: {
+                user_id: user.id,
+                OR: [{ status: 'REJECTED' }],
+            },
+        });
+        const TRASH = await this.prisma.orders.count({
+            where: {
+                user_id: user.id,
+                OR: [{ status: 'TRASH' }],
+            },
+        });
+        const PAID = await this.prisma.orders.count({
+            where: {
+                user_id: user.id,
+                OR: [{ status: 'PAID' }],
+            },
+        });
+        if (!user) {
+            throw new common_1.HttpException('User not found', common_1.HttpStatus.NOT_FOUND);
+        }
+        return {
+            id: user.id,
+            fullname: user.fullname,
+            phone_number: user.phone_number,
+            email: user.email,
+            balance: user.balance,
+            isVerified: user.isVerified,
+            Orders: user.Orders,
+            total_orders: user._count.Orders,
+            referral_links: user._count.Links,
+            PAID: PAID,
+            DONE: DONE,
+            IN_PROGRESS: IN_PROGRESS,
+            REJECTED: REJECTED,
+            TRASH: TRASH,
         };
     }
     async getProducts(page) {

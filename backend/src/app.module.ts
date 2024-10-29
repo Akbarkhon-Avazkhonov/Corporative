@@ -15,6 +15,7 @@ import { GuidesModule } from './guides/guides.module';
 import { BidModule } from './bid/bid.module';
 import { ProfileModule } from './profile/profile.module';
 import { PrismaService } from './prisma.service';
+import { OnecModule } from './onec/onec.module';
 @Module({
   imports: [
     AuthModule,
@@ -31,6 +32,7 @@ import { PrismaService } from './prisma.service';
     GuidesModule,
     BidModule,
     ProfileModule,
+    OnecModule,
   ],
   controllers: [AppController],
   providers: [AppService, PrismaService],

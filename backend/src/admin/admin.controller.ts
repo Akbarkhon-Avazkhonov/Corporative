@@ -110,4 +110,12 @@ export class AdminController {
   changeEcoinRate(@Body() body) {
     return this.adminService.changeRate(body.rate);
   }
+
+  @ApiTags('Referral Lincks')
+  @UseGuards(AdminGuard)
+  @ApiBearerAuth()
+  @Get('/user-profile/:id')
+  getUserProfile(@Param('id') id: number) {
+    return this.adminService.getUserProfile(+id);
+  }
 }

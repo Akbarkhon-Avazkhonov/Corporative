@@ -9,11 +9,7 @@ export declare class CategoryService {
         title: string;
         super_category_id: number;
     }>;
-    findAll(): Promise<{
-        id: number;
-        title: string;
-        super_category_id: number;
-    }[]>;
+    findAll(): Promise<any[]>;
     findOne(id: number): Promise<{
         id: number;
         title: string;

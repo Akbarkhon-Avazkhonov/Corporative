@@ -19,6 +19,14 @@ export declare class BidController {
         message: string;
         created_at: Date;
     }[]>;
+    findSome(take: number, skip: number): Promise<{
+        id: number;
+        name: string;
+        surname: string;
+        phone: string;
+        message: string;
+        created_at: Date;
+    }[]>;
     remove(id: string): Promise<{
         id: number;
         name: string;
