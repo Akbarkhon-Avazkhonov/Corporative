@@ -28,7 +28,7 @@ async function bootstrap() {
       '1c.corp.euphoriagroup.uz',
       'http://localhost:3000',
       'https://euphoria-admin.uz',
-      'https://euphoria-admin.uz/'
+      'https://euphoria-admin.uz/',
       'https://euphoria-referral.uz',
       'https://euphoria-referral.uz/',
     ],
