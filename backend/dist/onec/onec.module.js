@@ -10,13 +10,14 @@ exports.OnecModule = void 0;
 const common_1 = require("@nestjs/common");
 const onec_service_1 = require("./onec.service");
 const schedule_1 = require("@nestjs/schedule");
+const prisma_service_1 = require("../prisma.service");
 let OnecModule = class OnecModule {
 };
 exports.OnecModule = OnecModule;
 exports.OnecModule = OnecModule = __decorate([
     (0, common_1.Module)({
         imports: [schedule_1.ScheduleModule.forRoot()],
-        providers: [onec_service_1.OnecService],
+        providers: [onec_service_1.OnecService, prisma_service_1.PrismaService],
     })
 ], OnecModule);
 //# sourceMappingURL=onec.module.js.map
