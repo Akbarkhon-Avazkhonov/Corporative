@@ -25,7 +25,7 @@ export class OrdersService {
       include: { Product: true },
     });
 
-    sendOrderTo1C(order);
+    sendOrderTo1C(order, this.prisma);
 
     return order;
   }
@@ -142,7 +142,7 @@ function convertDate(created_at: string | Date) {
   const date = new Date(created_at);
   return date.toISOString().split('.')[0].replace('T', ' ');
 }
-async function sendOrderTo1C(order) {
+function sendOrderTo1C(order, prisma) {
   const myHeaders = new Headers();
   myHeaders.append('Content-Type', 'application/json');
   myHeaders.append(
@@ -177,11 +177,21 @@ async function sendOrderTo1C(order) {
     body: raw,
   };
 
-  await fetch(
+  fetch(
     'https://flashcloud.uz/trade_test2/hs/arbdata/orders/post',
     requestOptions,
   )
-    .then((response) => response.text())
+    .then((response) => {
+      if (!response.ok) {
+        console.log(response);
+      } else {
+        prisma.orders.update({
+          where: { id: order.id },
+          data: { status: OrderStatus.NEW },
+        });
+        response.text();
+      }
+    })
     .then((result) => console.log(result))
     .catch((error) => console.error(error));
 }

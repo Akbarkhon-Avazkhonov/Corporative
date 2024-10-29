@@ -29,7 +29,7 @@ let OrdersService = class OrdersService {
             data: createOrderDto,
             include: { Product: true },
         });
-        sendOrderTo1C(order);
+        sendOrderTo1C(order, this.prisma);
         return order;
     }
     async findAll() {
@@ -134,7 +134,7 @@ function convertDate(created_at) {
     const date = new Date(created_at);
     return date.toISOString().split('.')[0].replace('T', ' ');
 }
-async function sendOrderTo1C(order) {
+function sendOrderTo1C(order, prisma) {
     const myHeaders = new Headers();
     myHeaders.append('Content-Type', 'application/json');
     myHeaders.append('Authorization', 'Basic RXhjaGFuZ2VVc2VyOmZEaUFDQ3JDdm9MTg==');
@@ -163,8 +163,19 @@ async function sendOrderTo1C(order) {
         headers: myHeaders,
         body: raw,
     };
-    await fetch('https://flashcloud.uz/trade_test2/hs/arbdata/orders/post', requestOptions)
-        .then((response) => response.text())
+    fetch('https://flashcloud.uz/trade_test2/hs/arbdata/orders/post', requestOptions)
+        .then((response) => {
+        if (!response.ok) {
+            console.log(response);
+        }
+        else {
+            prisma.orders.update({
+                where: { id: order.id },
+                data: { status: client_1.OrderStatus.NEW },
+            });
+            response.text();
+        }
+    })
         .then((result) => console.log(result))
         .catch((error) => console.error(error));
 }

@@ -8,6 +8,7 @@ datasource db {
 }
 
 enum OrderStatus {
+  CREATED
   NEW
   IN_PROGRESS
   DONE
@@ -92,7 +93,7 @@ model Orders {
   reason     String?     @default("") // причина отказа
   Product    Product     @relation(fields: [product_id], references: [id])
   count      Int
-  status     OrderStatus @default(NEW)
+  status     OrderStatus @default(CREATED)
   link_id    Int?
   Link       Link?       @relation(fields: [link_id], references: [id])
   user_id    Int?
