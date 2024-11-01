@@ -177,10 +177,7 @@ function sendOrderTo1C(order, prisma) {
     body: raw,
   };
 
-  fetch(
-    'https://flashcloud.uz/trade_test2/hs/arbdata/orders/post',
-    requestOptions,
-  )
+  fetch('https://flashcloud.uz/trade/hs/arbdata/orders/post', requestOptions)
     .then((response) => {
       if (!response.ok) {
         console.log(response);

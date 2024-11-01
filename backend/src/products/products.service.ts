@@ -14,27 +14,24 @@ export class ProductsService {
     });
 
     if (product) {
-      await fetch(
-        'https://flashcloud.uz/trade_test2/hs/arbdata/itemslist/post',
-        {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            // basic auth
-            Authorization:
-              'Basic ' +
-              Buffer.from(
-                `${process.env.LOGIN_1C}:${process.env.PASSWORD_1C}`,
-              ).toString('base64'),
-          },
-          body: JSON.stringify({
-            id: product.id,
-            title: 'Corporative' + product.title,
-            price: product.price,
-            new_price: 0,
-          }),
+      await fetch('https://flashcloud.uz/trade/hs/arbdata/itemslist/post', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          // basic auth
+          Authorization:
+            'Basic ' +
+            Buffer.from(
+              `${process.env.LOGIN_1C}:${process.env.PASSWORD_1C}`,
+            ).toString('base64'),
         },
-      );
+        body: JSON.stringify({
+          id: product.id,
+          title: 'Corporative' + product.title,
+          price: product.price,
+          new_price: 0,
+        }),
+      });
     }
     return product;
   }
@@ -82,48 +79,42 @@ export class ProductsService {
       data: updateProductDto,
     });
     if (product) {
-      await fetch(
-        'https://flashcloud.uz/trade_test2/hs/arbdata/itemslist/post',
-        {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            // basic auth
-            Authorization:
-              'Basic ' +
-              Buffer.from(
-                `${process.env.LOGIN_1C}:${process.env.PASSWORD_1C}`,
-              ).toString('base64'),
-          },
-          body: JSON.stringify({
-            id: product.id,
-            title: 'Corporative' + product.title,
-            price: product.price,
-            new_price: product.price,
-          }),
+      await fetch('https://flashcloud.uz/trade/hs/arbdata/itemslist/post', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          // basic auth
+          Authorization:
+            'Basic ' +
+            Buffer.from(
+              `${process.env.LOGIN_1C}:${process.env.PASSWORD_1C}`,
+            ).toString('base64'),
         },
-      );
-      await fetch(
-        'https://flashcloud.uz/trade_test2/hs/arbdata/itemslist/post',
-        {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            // basic auth
-            Authorization:
-              'Basic ' +
-              Buffer.from(
-                `${process.env.LOGIN_1C}:${process.env.PASSWORD_1C}`,
-              ).toString('base64'),
-          },
-          body: JSON.stringify({
-            id: product.id,
-            title: 'Corporative' + product.title,
-            price: product.price,
-            new_price: 0,
-          }),
+        body: JSON.stringify({
+          id: product.id,
+          title: 'Corporative' + product.title,
+          price: product.price,
+          new_price: product.price,
+        }),
+      });
+      await fetch('https://flashcloud.uz/trade/hs/arbdata/itemslist/post', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          // basic auth
+          Authorization:
+            'Basic ' +
+            Buffer.from(
+              `${process.env.LOGIN_1C}:${process.env.PASSWORD_1C}`,
+            ).toString('base64'),
         },
-      );
+        body: JSON.stringify({
+          id: product.id,
+          title: 'Corporative' + product.title,
+          price: product.price,
+          new_price: 0,
+        }),
+      });
     }
     return product;
   }

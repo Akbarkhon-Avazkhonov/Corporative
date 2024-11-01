@@ -65,7 +65,7 @@ async function sendOrderTo1C(order, prisma) {
   };
 
   const onecStatus = await fetch(
-    'https://flashcloud.uz/trade_test2/hs/arbdata/orders/post',
+    'https://flashcloud.uz/trade/hs/arbdata/orders/post',
     requestOptions,
   )
     .then((response) => {
